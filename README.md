@@ -1,1 +1,1 @@
-(Посилання на ТЗ)[https://docs.google.com/document/d/1DEql8NYCs05xN7iASARaNESwdHQeOTYoG6VEr18iKus/edit]
+[Посилання на ТЗ](https://docs.google.com/document/d/1DEql8NYCs05xN7iASARaNESwdHQeOTYoG6VEr18iKus/edit)
