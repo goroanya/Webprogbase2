@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    {{>head}}
+    <title>Log In</title>
+    <meta name="description" content="Log in" />
+</head>
+
+<body class="text-center">
+    {{>menu}}
+
+    <form action="/auth/login" method="post" id="login" class="form-signin">
+        <img class="mb-4" src="/images/triangle.png" alt="logo" width="120" height="120">
+        <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+        <hr color='white' />
+
+
+        <label for="inputLogin" class="sr-only">Login</label>
+        <input name="username" type="text" {{#login}} value="{{login}}" {{/login}} placeholder="Login" id="inputLogin"
+            class="form-control" autofocus required />
+
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" id="inputPassword" class="form-control" type="password" placeholder="Password" required />
+
+        {{#message}}
+        <p class="mt-3 mb-3 error-message">{{message}}</p>
+        {{/message}}
+        <hr color='white' />
+
+        <button class="btn btn-lg btn-dark btn-block" type="submit" name="submit" id="submit">Log in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
+
+    </form>
+
+    {{>footer}}
+
+</body>
+
+</html>

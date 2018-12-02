@@ -1,0 +1,34 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    {{>head}}
+    <title>Albums</title>
+    <meta name="description" content="Collections of photos">
+
+
+
+
+</head>
+
+<body>
+
+    {{>menu}}
+    
+
+    <div class="addAlbumBtn">
+        <a href="/albums/new" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-plus"></span>
+            Add new album</a>
+    </div>
+    
+    <div id="loader"></div>
+    <div id="albums" class="animate-bottom"></div>
+
+    {{>footer}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="/javascripts/albums.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  {{>head}}
+  <title>{{album}}</title>
+  <meta name="description" content="Photos of {{album}}">
+
+
+
+</head>
+
+<body>
+
+  {{>menu}}
+  
+
+  <input type="hidden" id='album' value="{{album}}">
+
+  <div class="albumButtons">
+
+    <form action="/albums/{{album}}/new" method="get" class="addPictureBtn">
+      <button type="submit" class="btn btn-outline-success">Add photo</button>
+    </form>
+
+    <form action="/albums/{{album}}/update" method="get" class="updateAlbum">
+      <button type="submit" class="btn btn-outline-info">Update</button>
+    </form>
+
+    <div class="deleteAlbumBtn">
+      <button id="albumDeleteButton" class="btn btn-outline-danger ">Delete</button>
+    </div>
+
+  </div>
+
+
+  <!-- Modal -->
+
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Are tou sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>You are about to delete album and all of its photos.
+            </br>
+            <span style="font-weight:bold">This operation is permanent and cannot be undone.</span>
+          </p>
+
+        </div>
+        <div class="modal-footer">
+          <form action="/albums" id="deleteForm">
+            <button type="submit" id="confirmDeleteButton" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search">
+    <form>
+      <input type="text" onkeyup="searchByName();"  class="form-control" id="search" name="search" placeholder="Search..">
+    </form>
+  </div>
+
+
+
+  <div id="loader"> test</div>
+  <div id="photos" class="animate-bottom"></div>
+
+  {{>footer}}
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+
+  <script src="/javascripts/deleteAlbum.js"></script>
+  <script src="/javascripts/photos.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+{{#empty}}
+<div class="empty">
+    <h2> No albums</h2>
+</div>
+{{/empty}}
+
+
+
+{{^empty}}
+<div class="albumsTable " style=" width: 50%; position: absolute;left: 27%; ">
+    <table id="albums">
+        {{#albums}}
+        <tr>
+            <th><a href="/albums/{{name}}">{{name}}</a></th>
+        </tr>
+        {{/albums}}
+    </table>
+</div>
+
+ <div class="btn-toolbar myPagination" role="toolbar" aria-label="Toolbar with button groups">
+     <div class="btn-group mr-2" role="group" aria-label="First group">
+         <button type="button" class="btn btn-outline-dark btn-lg" {{^prev}} disabled {{/prev}} onclick="goToPage({{prev}});"><<</button>
+     </div>
+     <div class="btn-group mr-2" role="group" aria-label="Second group">
+         {{#pageCounterArray}}
+         <button type="button" 
+         {{#current}} class="btn btn-secondary btn-lg"  {{/current}} 
+         {{^current}} class="btn  btn-outline-dark btn-lg" {{/current}} 
+         onclick="goToPage({{page}});">{{page}}</button>
+         {{/pageCounterArray}}
+     </div>
+     <div class="btn-group" role="group" aria-label="Third group">
+         <button type="button" {{^next}} disabled {{/next}} class="btn btn-outline-dark btn-lg" onclick="goToPage({{next}});">>></button>
+     </div>
+ </div>
+
+
+{{/empty}}

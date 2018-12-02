@@ -1,0 +1,73 @@
+{{#empty}}
+<div class="empty">
+    <h2> The album "{{album}}" is empty</h2>
+</div>
+{{/empty}}
+
+
+
+
+{{^empty}}
+
+{{^search}}
+
+
+
+<div id="gallery" class="gallery">
+
+    {{#photos}}
+    <div id="photoContainer" class="thumbnail">
+        <a href="/photos/page/{{short_name}}">
+            <img src="{{url}}" alt="picture with short name: {{short_name}}">
+            <h2>{{short_name}}</h2>
+        </a>
+    </div>
+    {{/photos}}
+
+</div>
+
+
+{{/search}}
+
+
+
+
+{{#search}}
+
+
+{{#found}}
+
+<div class="found_or_not">
+    <h3> Found pictures by request : {{request}}</h3>
+</div>
+
+<div  id = "galleryFiltered" class="gallery">
+    {{#photos}}
+    <div id="photoContainer" class="thumbnail">
+        <a href="/photos/page/{{short_name}}">
+            <img src="{{url}}" alt="picture with short name: {{short_name}}">
+            <h2>{{short_name}}</h2>
+        </a>
+    </div>
+    {{/photos}}
+
+</div>
+
+
+</div>
+
+{{/found}}
+
+
+
+{{^found}}
+
+<div class="found_or_not">
+    <h3>Nothing found by request : "{{request}}"</h3>
+</div>
+
+{{/found}}
+
+
+{{/search}}
+{{/empty}}

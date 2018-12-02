@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {{>head}}
+  <title>Create new picture </title>
+  <meta name="description" content="New picture">
+
+
+
+</head>
+
+<body>
+
+  {{>menu}}
+
+  
+
+
+  <form action="/new/picture" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    <fieldset>
+      {{#album_name}}
+      <legend class="legend">Add picture to "{{album_name}}"</legend>
+      {{/album_name}}
+
+      {{^album_name}}
+      <legend class="legend">Add new temporary picture </legend>
+      {{/album_name}}
+
+      {{#message}}
+      <div class="newPicError">
+        <p>{{message}}</p>
+      </div>
+      {{/message}}
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="short_name">Unique Id</label>
+        <div class="col-md-4">
+          <input id="short_name" name="short_name" type="text" placeholder="Short uniqe name for your photo" class="form-control input-md"
+            required="" pattern="[a-zA-Z][A-Za-z0-9_.]{1,15}" title=" name must start with a letter ,could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 15 characters">
+          <span class="help-block">Your id should be unique. If you have photo with id : "family", now you should
+            use for instanse "family2" e.t.c.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Description </label>
+        <div class="col-md-4">
+          <textarea class="form-control" id="textarea" name="description" placeholder="enter the description of picture..."></textarea>
+        </div>
+
+      </div>
+      {{#albums}}
+
+      <div class="form-group">
+        <label class="col-md-4 control-label">Add the existing album or to new </label>
+        <div class="col-md-4">
+
+          <input list="albums_list" name="album_name">
+          <datalist id="albums_list">
+            <option value={{name}}>{{name}}</option>
+          </datalist>
+        </div>
+      </div>
+      {{/albums}}
+
+      {{#album_name}}
+      <input type="hidden" name="album_name" value="{{album_name}}">
+      {{/album_name}}
+
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="filebutton">Choose the picture</label>
+        <div class="col-md-4">
+          <input name="pictureFile" class="input-file" type="file" accept="image/*" required>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="singlebutton"></label>
+        <div class="col-md-4">
+          <button type="submit" name="submit" class="btn btn-inverse">Submit</button>
+        </div>
+      </div>
+
+    </fieldset>
+
+
+
+
+  </form>
+
+
+  {{>footer}}
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {{>head}}
+
+  <title>ABOUT</title>
+  <meta name="description" content="Page about our organization">
+
+
+</head>
+
+<body>
+
+  {{>menu}}
+
+  
+
+  <div class="main_page_about">
+    <h1>Hello!</h1>
+    <p>This site is analog of instagram. Here you can see someone's photos, download your own photo, see user pages,
+      talk to users .<br>
+      Now you can see some photo collection and 3 user pages. <br>
+      The author of "keep the moment" is Ann Horodchenko.<br>
+      Thank you for visiting!
+  </div>
+
+  {{>footer}}
+</body>
+
+</html>

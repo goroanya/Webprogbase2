@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    {{>head}}
+    <title>{{album_name}}</title>
+    <meta name="description" content="Photo of {{album_name}}">
+
+
+
+</head>
+
+<body>
+
+    {{>menu}}
+   
+
+    <div class="pictureButtons ">
+
+        <div class="updatePictureBtn">
+            <form action="/photos/{{picture.short_name}}/update" method="GET">
+                <button type="submit"   class="btn btn-outline-info mybtn">Update</button>
+            </form>
+            
+        </div>
+
+        <div class="deletePictureBtn">
+            <button type="button" id="photoDeleteButton" name="deleteAlbum" class="btn btn-outline-danger mybtn">Delete</button>
+        </div>
+
+    </div>
+
+    <div class="container pictureContainer">
+        <div class="well">
+            <div class="caption">
+                <h2 id = "pictureName" >{{picture.short_name}}</h2>
+            </div>
+            <div class="media">
+
+
+
+                <div class="picture">
+                    <img src="{{picture.url}}">
+                </div>
+
+                <div class="media-body ">
+
+                    <p style="text-align: center;"> {{picture.description}} </p>
+
+                    <p class="text-right-bottom">By {{picture.author.login}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Are tou sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span style="font-weight:bold">This operation is permanent and cannot be undone.</span>
+
+                </div>
+                <div class="modal-footer">
+                    <form action ="/albums/{{picture.album.name}}" id="deleteForm" method="get">
+                        <button type="submit" id="confirmDeleteButton" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{>footer}}
+    <script src="/javascripts/deletePhoto.js"></script>
+</body>
+
+</html>

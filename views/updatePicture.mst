@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {{>head}}
+  <title>Update picture</title>
+  <meta name="description" content="New picture">
+
+
+
+</head>
+
+<body>
+
+  {{>menu}}
+
+
+
+
+  <form action="/update/picture" method="POST" enctype="multipart/form-data" class="form-horizontal">
+
+
+    <fieldset>
+
+      <legend class="legend"> Update picture </legend>
+
+
+      {{#message}}
+      <div class="newPicError">
+        <p>{{message}}</p>
+      </div>
+      {{/message}}
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="short_name">Unique Id</label>
+        <div class="col-md-4">
+          <input id="short_name" name="short_name" type="text" class="form-control input-md" required="" value="{{pic.short_name}}"
+            pattern="[a-zA-Z][A-Za-z0-9_.]{1,15}" title=" name must start with a letter ,could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 15 characters">
+          <span class="help-block">Your id should be unique. If you have photo with id : "family", now you should
+            use for instanse "family2" e.t.c.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Description </label>
+        <div class="col-md-4">
+          <textarea class="form-control" name="description">{{pic.description}}</textarea>
+        </div>
+
+      </div>
+
+      <input type="hidden" name="album_name" value="{{pic.album.name}}">
+      <input type="hidden" name="old_short_name" value="{{pic.short_name}}">
+      <input type="hidden" name="id" value="{{pic.id}}">
+
+
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="singlebutton"></label>
+        <div class="col-md-4">
+          <button type="submit" name="submit" class="btn btn-inverse">Submit</button>
+        </div>
+      </div>
+
+    </fieldset>
+    <!-- Select Basic 
+      
+      <div class="form-group">
+        <label class="col-md-4 control-label">Choose the album</label>
+        <div class="col-md-4">
+
+          <input list="albums" name="album">
+          <datalist id="albums">
+            {{#albums}}
+            <option value={{name}}></option>
+            {{/albums}}
+          </datalist>
+        </div>
+      </div>
+      -->
+  </form>
+
+
+  {{>footer}}
+
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {{>head}}
+
+  <title>{{userProfile.fullname}}</title>
+  <meta name="description" content="page of {{userProfile.fullname}}">
+  <link type="text/css" href="/stylesheets/user.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+
+</head>
+
+<body>
+
+  {{>menu}}
+
+ 
+
+
+  <div class="card">
+    <div class="box">
+      <div class="img">
+        <img src="{{userProfile.avaUrl}}">
+      </div>
+      <h1>{{userProfile.login}}<br>
+
+        {{#adminRole}}
+        <span>{{userProfile.role}}
+        </span>
+
+        <div class="selectRole">
+          <form action="/users/{{userProfile.login}}/updateRole" method="POST">
+
+            <select name="role" class="form-control" id="sel1">
+              <option value="simple">simple user</option>
+              <option selected value="admin">admin</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-light btn-sm">Change role</button>
+        </form>
+        {{/adminRole}}
+        
+      </h1>
+      <h3>{{userProfile.fullname}}</h3>
+      <h5>Bio</h5>
+      <p> {{{userProfile.bio}}}</p>
+      <!-- <span>
+        <a href="{{userProfile.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+      </span> -->
+    </div>
+  </div>
+
+
+
+  {{>footer}}
+
+</body>
+
+</html>
+
+
+{{>footer}}
+
+</body>
+
+</html>

@@ -1,0 +1,677 @@
+* {
+    font-family: Muli;
+    font-size: initial;
+}
+
+.background img {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.main_page {
+    width: 40%;
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    float: left;
+}
+
+.main_page h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+.main_page p {
+    text-align: center;
+    font-size: 25px;
+    letter-spacing: 2px;
+    line-height: 1.8;
+}
+
+.main_page_about {
+    width: 75%;
+    position: absolute;
+    top: 200px;
+    left: 20%;
+    float: left;
+}
+
+.main_page_about h1 {
+    text-align: center;
+    font-size: 70px;
+}
+
+.main_page_about p {
+    margin: 26px;
+    text-align: center;
+    font-size: 30px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+}
+
+.retreat_top {
+    position: fixed;
+    z-index: 10;
+    top: 60px;
+    width: 80%;
+    left: 20%;
+    height: 39px;
+    background-color: #f3f3f3;
+}
+
+.menu {
+    overflow: auto;
+    top: 0;
+    position: fixed;
+    z-index: 1;
+    text-align: center;
+    left: 20%;
+    display: inline-block;
+    width: 80%;
+    background-color: #707070;
+    height: 80px;
+    /* display:flex;
+    justify-content: center; */
+}
+
+.menu .menuAuth {
+    float: left;
+    width: 25%;
+}
+
+.menu .menuAuth ul {
+    justify-content: center;
+    display: flex;
+    position: relative;
+    list-style-type: none;
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+}
+
+.menu .menuAuth li {
+    float: left;
+    margin-right: 50px;
+}
+
+.menu .menuUsername {
+    float: left;
+    width: 10%;
+}
+
+.menu .menuUsername h4 a {
+    justify-content: center;
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.menu .menuAuth li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.menu .menuAuth a {
+    text-decoration: none;
+}
+
+.menu .menuAuth li a:hover:not(.active) {
+    border: none;
+    background: #fff;
+    color: #1b1b1b;
+}
+
+.menu .navigation {
+    width: 65%;
+    float: left;
+}
+
+.menu .navigation ul {
+    justify-content: center;
+    display: flex;
+    position: relative;
+    list-style-type: none;
+    overflow: hidden;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+}
+
+.menu .navigation li {
+    float: left;
+    margin-right: 50px;
+}
+
+.menu .navigation li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.menu .navigation a {
+    text-decoration: none;
+}
+
+.menu .navigation li a:hover:not(.active) {
+    border: none;
+    background: #fff;
+    color: #1b1b1b;
+}
+
+.logoPic {
+    position: relative;
+}
+
+.logoPic img {
+    width: 100%;
+    height: 80%;
+}
+
+.logo {
+    position: fixed;
+    width: 10%;
+    left: 5%;
+    height: 150px;
+}
+
+.logoName {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.logoName h5 {
+    position: relative;
+    font-size: 20px;
+}
+
+.albumsTable table, td, th {
+    border: 1px solid rgb(224, 224, 224);
+    text-align: left;
+}
+
+.albumsTable table {
+    border-collapse: collapse;
+    width: 80%;
+    position: absolute;
+    top: 300px;
+    left: 10%;
+    background-color: white;
+    float: left;
+}
+
+.albumsTable th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+.albumsTable {
+    padding-top: 70px;
+}
+
+.albumsTable th:hover {
+    background-color: rgba(167, 167, 167, 0.589);
+}
+
+.albumsTable tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+.albumsTable tr a {
+    display: block;
+    text-decoration: underline;
+    color: black;
+}
+
+.user_page {
+    border: groove;
+    position: absolute;
+    width: 70%;
+    left: 20%;
+    top: 200px;
+    height: 1000px;
+    margin: 40px;
+}
+
+.image_and_username {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    top: 110px;
+    right: 110px;
+}
+
+.user_image_display {
+    width: 20%;
+}
+
+.user_image_display img {
+    height: 400px;
+    width: 400px;
+    transition: width 2s, height 2s, transform 2s;
+}
+
+.user_image_display img:hover {
+    transform: rotate(360deg);
+    width: 800px;
+    height: 800px;
+}
+
+.name_login {
+    height: 500px;
+    width: 50%;
+}
+
+.name_login h2 {
+    right: 40px;
+    top: -100px;
+    width: 45%;
+    height: 100px;
+    text-align: center;
+    padding: 100px;
+    margin: 20px;
+    font-size: 72px;
+    position: absolute;
+}
+
+.name_login p {
+    font-size: 40px;
+    position: absolute;
+    top: 200px;
+    right: 10%;
+    width: 40%;
+}
+
+.biography {
+    position: absolute;
+    top: 600px;
+    width: 55%;
+    left: 38%;
+    height: 450px;
+}
+
+.biography h1 {
+    text-align: center;
+    font-size: 72px;
+}
+
+.biography p {
+    font-size: 30px;
+    text-align: center;
+}
+
+.gallery {
+    top: 250px;
+    position: absolute;
+    left: 20%;
+    height: 100%;
+    width: 80%;
+    margin: 0 auto;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+.gallery>div {
+    position: relative;
+    float: left;
+    padding: 5px;
+}
+
+.gallery img {
+    display: block;
+    width: 450px;
+    height: 350px;
+}
+
+.gallery h2 {
+    text-align: center;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    height: 20px;
+}
+
+.footer p {
+    color: rgb(231, 230, 230);
+    font-style: italic;
+    text-align: center;
+}
+
+/*-----------------------------------------------*/
+
+.search {
+    position: absolute;
+    top: 150px;
+    right: 5%;
+}
+::placeholder{
+    font-size: 15px;
+}
+
+
+.search input[type=text] {
+    width: 230px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.pictureContainer {
+    position: absolute;
+    top: 200px;
+    left: 25%;
+}
+
+.picture {
+    position: relative;
+    left: 30%;
+}
+
+.form-horizontal {
+    position: absolute;
+    top: 300px;
+    left: 35%;
+    width: 50%;
+}
+
+.legend {
+    text-align: center;
+    font-size: 33px;
+}
+
+.addAlbumBtn {
+    top: 125px;
+    left: 20%;
+    position: absolute;
+}
+
+.text-right-bottom {
+    padding: 5px;
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    border: 1px solid grey;
+}
+
+.picture {
+    position: relative;
+    left: 5%;
+    margin: 5%;
+}
+
+.picture img {
+    width: 90%
+}
+
+.deletePictureBtn {
+    top: 10px;
+    position: absolute;
+    right: 35px;
+}
+
+div.myPagination {
+    left: 48%;
+    width: 25%;
+    bottom: 5%;
+    text-align: center;
+    position: absolute;
+}
+
+.found_or_not {
+    position: absolute;
+    top: 175px;
+    left: 40%;
+    height: 50px;
+    width: 40%;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+.pictureUrl {
+    position: relative;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid rgb(224, 224, 224);
+    left: 35%;
+    width: 25%;
+    margin: 30px;
+}
+
+.pictureUrl a {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.table_caption {
+    font-size: 30px;
+    text-align: center;
+}
+
+.empty {
+    position: absolute;
+    top: 400px;
+    left: 40%;
+}
+
+.newPicError {
+    left: 35%;
+    position: relative;
+    text-align: left;
+    letter-spacing: 2px;
+    color: red;
+    font-size: 14px;
+}
+
+.developer {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 79%;
+}
+
+.devTable {
+    background-color: #f0f0f0;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.devTable td {
+    font-size: 16px;
+}
+
+.devTable h1 {
+    margin-bottom: 30px;
+    font-size: 34px;
+    justify-content: center;
+    display: flex;
+    text-align: center;
+}
+
+.devText h1 {
+    font-size: 40px;
+    font-family: sans-serif;
+}
+
+.devText p {
+    margin: 10x;
+    font-size: 17px;
+    font-family: sans-serif;
+}
+
+.devText h3 {
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.albumButtons {
+    position: absolute;
+    top: 125px;
+    left: 20%;
+    width: 13%;
+    height: 100px;
+}
+
+.addPictureBtn button {
+    position: absolute;
+    margin: 4px auto;
+    width: 100%;
+    top: 0;
+    font-size: 18px;
+}
+
+.updateAlbum button {
+    position: absolute;
+    margin: 4px auto;
+    float: left;
+    width: 47%;
+    bottom: 0;
+    font-size: 18px;
+}
+
+.deleteAlbumBtn button {
+    margin: 4px auto;
+    position: absolute;
+    float: left;
+    width: 47%;
+    bottom: 0;
+    font-size: 18px;
+    right: 0;
+}
+
+.pictureButtons {
+    position: relative;
+    top: 125px;
+    left: 20%;
+    width: 12%;
+    height: 34px;
+}
+
+.deletePictureBtn {
+    position: absolute;
+    float: left;
+    width: 45%;
+    font-size: 18px;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+
+.updatePictureBtn {
+    position: absolute;
+    width: 45%;
+    font-size: 18px;
+    left: 0;
+    height: 100%;
+}
+
+input:invalid {
+    color: red;
+}
+
+.mybtn {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+}
+
+.caption {
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+/*------------------------------------------*/
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    margin: -75px 0 0 -75px;
+    border: 10px solid #c7c7c7;
+    border-radius: 100%;
+    border-top: 10px solid grey;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add animation to "page content" */
+
+.animate-bottom {
+    display: none;
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+    to {
+        bottom: 0px;
+        opacity: 1
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+    to {
+        bottom: 0;
+        opacity: 1
+    }
+}

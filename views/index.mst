@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {{>head}}
+  <title>KEEP THE MOMENT</title>
+  <meta name="description" content="home page">
+</head>
+
+<body class="text-center">
+
+  {{>menu}}
+
+  <div class="main-page">
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>Welcome!</strong>
+            </h1>
+            <hr color="white">
+          </div>
+          <div class="col-lg-10 mx-auto">
+            <p class="text-faded mb-5">It's nice to see you on my own website!<br>Here you can see some photos, look
+              for friend's accounts and so so on!<br>The site is always getting better, so don't forget to visit us!<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+  </div>
+  {{>footer}}
+
+</body>
+
+</html>

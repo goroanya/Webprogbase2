@@ -1,0 +1,9 @@
+   {{#photos}}
+    <div id="photoContainer" class="thumbnail">
+        <a href="/photos/page/{{short_name}}">
+            <img src="{{url}}" alt="picture with short name: {{short_name}}">
+            <h2>{{short_name}}</h2>
+        </a>
+    </div>
+    {{/photos}}
+    
