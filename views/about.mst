@@ -11,19 +11,32 @@
 
 </head>
 
-<body>
+<body class="text-center" style="width: 100%; height:100%; background-color: #333;">
 
   {{>menu}}
 
-  
 
-  <div class="main_page_about">
-    <h1>Hello!</h1>
-    <p>This site is analog of instagram. Here you can see someone's photos, download your own photo, see user pages,
-      talk to users .<br>
-      Now you can see some photo collection and 3 user pages. <br>
-      The author of "keep the moment" is Ann Horodchenko.<br>
-      Thank you for visiting!
+  <div class="main-page">
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>Hello!</strong>
+            </h1>
+            <hr color="white">
+          </div>
+          <div class="col-lg-10 mx-auto">
+            <p class="text-faded mb-5">This site is analog of instagram. Here you can see someone's photos, download
+              your own photo, see user pages,talk to users .<br>
+              Now you can see some photo collection and 3 user pages. <br>
+              The author of "keep the moment" is Ann Horodchenko.<br>
+              Thank you for visiting!
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
   </div>
 
   {{>footer}}

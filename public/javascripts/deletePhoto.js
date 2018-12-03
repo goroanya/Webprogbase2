@@ -1,12 +1,5 @@
-
-$("#photoDeleteButton").click(function () {
-    $("#deleteModal").modal();
-});
-
-
 $('#photoDeleteButton').click(function () {
     let photoName = $('#pictureName').html();
-    console.log(photoName);
     deleteConfirm(photoName);
 });
 

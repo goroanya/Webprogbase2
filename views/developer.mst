@@ -12,30 +12,28 @@
 
 </head>
 
-<body>
+<body style="width: 100%; height:100%; background-color: #333;">
     {{>menu}}
 
-   
-    <div class="developer">
-        <div class="devText">
-            <h1>Keep the moment REST API v1 Documentation</h1>
-            <h3><b>Requests</b></h3>
-            <p>
-                You are able to make GET, POST, PUT and DELETE requests to get, create new, update
-                and delete entity.
-            </p>
+    <div class="container" style="color:white">
+        <div class="developer">
+            <div class="devText" style>
+                <h1>Keep the moment REST API v1 Documentation</h1>
+                <h3><b>Requests</b></h3>
+                <p>
+                    You are able to make GET, POST, PUT and DELETE requests to get, create new, update
+                    and delete entity.
+                </p>
 
-            <h3><b>Errors</b></h3>
-            <p>
-                If some error occured returns JSON-object with field <code>message</code> with
-                information about error in it.
-            </p>
-        </div>
-        <hr>
-        <div class="devTable">
-
-            <h1>Users</h1>
-            <table class="table">
+                <h3><b>Errors</b></h3>
+                <p>
+                    If some error occured returns JSON-object with field <code>message</code> with
+                    information about error in it.
+                </p>
+            </div>
+            <hr color="white">
+            <table class="table table-dark ">
+                <h1 class="text-center">Users</h1>
                 <thead class="thead-light">
                     <tr style="text-align: center; font-size: 17px">
                         <th scope="col">URL</th>
@@ -95,139 +93,141 @@
             </table>
         </div>
 
-        <hr>
-        <div class="devTable">
-            <h1>Albums</h1>
-            <table class="table">
-                <thead class="thead-light">
-                    <tr style="text-align: center; font-size: 17px">
-                        <th scope="col">URL</th>
-                        <th scope="col">METHOD</th>
-                        <th scope="col">ACCESSIBLE FOR</th>
-                        <th scope="col">QUERY</th>
-                        <th scope="col">BODY</th>
-                        <th scope="col">RETURNS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>/albums</td>
-                        <td>GET</td>
-                        <td>Admin , Simple User</td>
-                        <td>page - number of page to be displayed (default = 1)<br>offset - number of albums to be
-                            displayed
-                            on the page (default = 3)</td>
-                        <td>-</td>
-                        <td>If Admin - returns ALL created albums<br>If Simple User - return all albums of this user
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>/albums</td>
-                        <td>POST</td>
-                        <td>Admin, Simple User </td>
-                        <td>-</td>
-                        <td>required field : name(should be unique)</td>
-                        <td>Created album <br> If not created - returns message about it </td>
-                    </tr>
-                    <tr>
-                        <td>/albums/:name</td>
-                        <td>GET</td>
-                        <td>Admin, Simple User( author )</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Album with specified name<br>If album is not found - returns message about it</td>
-                    </tr>
-                    <tr>
-                        <td>/albums/:name</td>
-                        <td>DELETE</td>
-                        <td>Admin, Simple User( author )</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td> Deleted album with specified name<br>If album is not found - returns message about it</td>
-                    </tr>
-                    <tr>
-                        <td>/albums/:name</td>
-                        <td>PUT</td>
-                        <td>Simple User( author )</td>
-                        <td>-</td>
-                        <td> name(shoud be unique in order to other albums) </td>
-                        <td> Updated album with specified name<br>If album is not found - returns message about it</td>
-                    </tr>
+        <hr color="white">
+        <table class="table table-dark">
+            <h1 class="text-center">Albums</h1>
 
-                </tbody>
-            </table>
-        </div>
-        <hr>
-        <div class="devTable">
-            <h1>Photos</h1>
-            <table class="table">
-                <thead class="thead-light">
-                    <tr style="text-align: center; font-size: 17px">
-                        <th scope="col">URL</th>
-                        <th scope="col">METHOD</th>
-                        <th scope="col">ACCESSIBLE FOR</th>
-                        <th scope="col">QUERY</th>
-                        <th scope="col">BODY</th>
-                        <th scope="col">RETURNS</th>
-                        <th scope="col">NOTE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>/photos</td>
-                        <td>GET</td>
-                        <td>Admin , Simple User</td>
-                        <td>page - number of page to be displayed (default = 1)<br>offset - number of photos to be
-                            displayed
-                            on the page (default = 10)<br> name - for search(offset (default = 5)</td>
-                        <td> - </td>
-                        <td>If Admin - returns ALL created photos<br>If Simple User - return all photos of this user
-                        </td>
-                        <td> - </td>
-                    </tr>
-                    <tr>
-                        <td>/photos</td>
-                        <td>POST</td>
-                        <td>Admin, Simple User </td>
-                        <td> - </td>
-                        <td>required field : name(should be unique), url <br> not required fields : description, album
-                        </td>
-                        <td>Created photo( author - logged user ) <br> If not created - returns message about it </td>
-                        <td> Admin can add photo only to his own albums </td>
-                    </tr>
-                    <tr>
-                        <td>/photos/:name</td>
-                        <td>GET</td>
-                        <td>Admin, Simple User( author )</td>
-                        <td> - </td>
-                        <td>-</td>
-                        <td>Photo with specified name<br>If photo is not found - returns message about it</td>
-                        <td> - </td>
-                    </tr>
-                    <tr>
-                        <td>/photos/:name</td>
-                        <td>DELETE</td>
-                        <td>Admin, Simple User( author )</td>
-                        <td>-</td>
-                        <td> - </td>
-                        <td> Deleted photo with specified name<br>If photo is not found - returns message about it</td>
-                        <td> - </td>
-                    </tr>
-                    <tr>
-                        <td>/photos/:name</td>
-                        <td>PUT</td>
-                        <td>Admin, Simple User( author )</td>
-                        <td> - </td>
-                        <td> name(shoud be unique in order to other photos), description</td>
-                        <td> Updated photo with specified name<br>If photo is not found - returns message about it</td>
-                        <td> Admin can update only his own photos </td>
-                    </tr>
+            <thead class="thead-light">
+                <tr style="text-align: center; font-size: 17px">
+                    <th scope="col">URL</th>
+                    <th scope="col">METHOD</th>
+                    <th scope="col">ACCESSIBLE FOR</th>
+                    <th scope="col">QUERY</th>
+                    <th scope="col">BODY</th>
+                    <th scope="col">RETURNS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/albums</td>
+                    <td>GET</td>
+                    <td>Admin , Simple User</td>
+                    <td>page - number of page to be displayed (default = 1)<br>offset - number of albums to be
+                        displayed
+                        on the page (default = 3)</td>
+                    <td>-</td>
+                    <td>If Admin - returns ALL created albums<br>If Simple User - return all albums of this
+                        user
+                    </td>
+                </tr>
+                <tr>
+                    <td>/albums</td>
+                    <td>POST</td>
+                    <td>Admin, Simple User </td>
+                    <td>-</td>
+                    <td>required field : name(should be unique)</td>
+                    <td>Created album <br> If not created - returns message about it </td>
+                </tr>
+                <tr>
+                    <td>/albums/:name</td>
+                    <td>GET</td>
+                    <td>Admin, Simple User( author )</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Album with specified name<br>If album is not found - returns message about it</td>
+                </tr>
+                <tr>
+                    <td>/albums/:name</td>
+                    <td>DELETE</td>
+                    <td>Admin, Simple User( author )</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td> Deleted album with specified name<br>If album is not found - returns message about it</td>
+                </tr>
+                <tr>
+                    <td>/albums/:name</td>
+                    <td>PUT</td>
+                    <td>Simple User( author )</td>
+                    <td>-</td>
+                    <td> name(shoud be unique in order to other albums) </td>
+                    <td> Updated album with specified name<br>If album is not found - returns message about it</td>
+                </tr>
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
+        <hr color="white">
+
+        <table class="table table-dark ">
+            <h1 class="text-center">Photos</h1>
+            <thead class="thead-light">
+                <tr style="text-align: center; font-size: 17px">
+                    <th scope="col">URL</th>
+                    <th scope="col">METHOD</th>
+                    <th scope="col">ACCESSIBLE FOR</th>
+                    <th scope="col">QUERY</th>
+                    <th scope="col">BODY</th>
+                    <th scope="col">RETURNS</th>
+                    <th scope="col">NOTE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/photos</td>
+                    <td>GET</td>
+                    <td>Admin , Simple User</td>
+                    <td>page - number of page to be displayed (default = 1)<br>offset - number of photos to be
+                        displayed
+                        on the page (default = 10)<br> name - for search(offset (default = 5)</td>
+                    <td> - </td>
+                    <td>If Admin - returns ALL created photos<br>If Simple User - return all photos of this
+                        user
+                    </td>
+                    <td> - </td>
+                </tr>
+                <tr>
+                    <td>/photos</td>
+                    <td>POST</td>
+                    <td>Admin, Simple User </td>
+                    <td> - </td>
+                    <td>required field : name(should be unique), url <br> not required fields : description,
+                        album
+                    </td>
+                    <td>Created photo( author - logged user ) <br> If not created - returns message about it
+                    </td>
+                    <td> Admin can add photo only to his own albums </td>
+                </tr>
+                <tr>
+                    <td>/photos/:name</td>
+                    <td>GET</td>
+                    <td>Admin, Simple User( author )</td>
+                    <td> - </td>
+                    <td>-</td>
+                    <td>Photo with specified name<br>If photo is not found - returns message about it</td>
+                    <td> - </td>
+                </tr>
+                <tr>
+                    <td>/photos/:name</td>
+                    <td>DELETE</td>
+                    <td>Admin, Simple User( author )</td>
+                    <td>-</td>
+                    <td> - </td>
+                    <td> Deleted photo with specified name<br>If photo is not found - returns message about it</td>
+                    <td> - </td>
+                </tr>
+                <tr>
+                    <td>/photos/:name</td>
+                    <td>PUT</td>
+                    <td>Admin, Simple User( author )</td>
+                    <td> - </td>
+                    <td> name(shoud be unique in order to other photos), description</td>
+                    <td> Updated photo with specified name<br>If photo is not found - returns message about it</td>
+                    <td> Admin can update only his own photos </td>
+                </tr>
+
+            </tbody>
+        </table>
+
     </div>
-
     {{>footer}}
 
 </body>

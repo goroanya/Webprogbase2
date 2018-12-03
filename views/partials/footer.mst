@@ -1,7 +1,5 @@
 <footer class="footer">
-    <div class="container">
-        <span class="text-muted"><i>created with love</i></span>
-    </div>
+    <span class="text-muted"><i>created with love</i></span>    
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

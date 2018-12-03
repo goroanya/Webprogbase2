@@ -3,7 +3,7 @@ let picturePerPage = 6;
 async function renderPhotos() {
     try {
 
-        let album = $('#album').val();
+        let album = $('#album').text();
 
 
         let itemsData = localStorage.filter
@@ -14,12 +14,20 @@ async function renderPhotos() {
         itemsData = await itemsData.json();
 
         itemsData.album = album;
+
         //перевірка чи альбом пустий
         if (itemsData.photos && itemsData.photos.length == 0) itemsData.empty = true;
+
         // якщо ми зробили запит на пошук
         if (itemsData.request) itemsData.search = true;
+        else $('#search-result').html('');
+
         //якщо пошук успішний
-        if (itemsData.request && itemsData.photos && itemsData.photos.length !== 0) itemsData.found = true;
+        if (itemsData.request && itemsData.photos && itemsData.photos.length !== 0)
+            $('#search-result').html(`Found pictures by request : ${itemsData.request}`);
+        
+        else if(itemsData.request && ( ! itemsData.photos || itemsData.photos.length == 0 ))
+             $('#search-result').html(`Nothing  found by request : ${itemsData.request}`);
 
 
         let templateStr = await fetch("/templates/photos.mst");
@@ -47,24 +55,16 @@ async function searchByName() {
 window.onload = async function () {
     localStorage.page = 1;
     localStorage.filter = "";
-    timeout();
     await renderPhotos();
 };
-function timeout() {
-    setTimeout(showPage, 250);
-}
 
-function showPage() {
-    document.getElementById("loader").style.display = "none";
-    document.getElementById("photos").style.display = "contents";
-}
 
 $(window).scroll(async function () {
     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 
         localStorage.page++;
 
-        let album = $('#album').val();
+        let album = $('#album').text();
 
         let itemsData = localStorage.filter
             ? await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}`)

@@ -22,18 +22,9 @@ async function goToPage(page) {
     await renderAlbums();
 }
 window.onload = async function () {
-    myFunction();
     localStorage.page = 1;
     await renderAlbums();
 };
 
-function myFunction() {
-    setTimeout(showPage, 500);
-}
-
-function showPage() {
-    document.getElementById("loader").style.display = "none";
-    document.getElementById("albums").style.display = "contents";
-}
 
 

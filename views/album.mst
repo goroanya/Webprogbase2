@@ -12,35 +12,12 @@
 
 </head>
 
-<body>
+<body class="text-center" style="width: 100%; height:100%; background-color: #333;">
 
   {{>menu}}
-  
-
-  <input type="hidden" id='album' value="{{album}}">
-
-  <div class="albumButtons">
-
-    <form action="/albums/{{album}}/new" method="get" class="addPictureBtn">
-      <button type="submit" class="btn btn-outline-success">Add photo</button>
-    </form>
-
-    <form action="/albums/{{album}}/update" method="get" class="updateAlbum">
-      <button type="submit" class="btn btn-outline-info">Update</button>
-    </form>
-
-    <div class="deleteAlbumBtn">
-      <button id="albumDeleteButton" class="btn btn-outline-danger ">Delete</button>
-    </div>
-
-  </div>
-
 
   <!-- Modal -->
-
-
-  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -58,32 +35,50 @@
         </div>
         <div class="modal-footer">
           <form action="/albums" id="deleteForm">
-            <button type="submit" id="confirmDeleteButton" class="btn btn-danger">Delete</button>
+            <button type="submit" id="confirmDeleteButton" class="btn btn-dark">Delete</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="search">
-    <form>
-      <input type="text" onkeyup="searchByName();"  class="form-control" id="search" name="search" placeholder="Search..">
-    </form>
+
+  <div class="container bg-dark " style="height: 100%">
+    <section class="jumbotron text-center bg-light">
+      <div class="container">
+        <h1 class="jumbotron-heading" id='album'>{{album}}</h1>
+        <p>
+          <a href="/albums/{{album}}/new" class="btn btn-outline-secondary my-2">Add photo</a>
+          <a href="/albums/{{album}}/update" class="btn btn-outline-dark my-2">Update album</a>
+          <button id="albumDeleteButton" class="btn btn-outline-danger my-2" data-toggle="modal" data-target="#deleteModal">Delete
+            album</button>
+        </p>
+      </div>
+      <div class="container">
+        <form>
+          <input type="text" onkeyup="searchByName();" class="form-control" id="search" name="search" placeholder="Search.."
+            autofocus>
+        </form>
+      </div>
+      <div class="container" >
+        <p id="search-result"></p>
+      </div>
+
+    </section>
+    <div id="photos" class="container "></div>
   </div>
 
-
-
-  <div id="loader"> test</div>
-  <div id="photos" class="animate-bottom"></div>
-
   {{>footer}}
-
-
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
 
   <script src="/javascripts/deleteAlbum.js"></script>
   <script src="/javascripts/photos.js"></script>
+
+
+
+
+
 </body>
 
 </html>

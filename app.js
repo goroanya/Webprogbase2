@@ -204,7 +204,7 @@ app.post('/update/album', Auth.checkAuth, async function (req, res) {
 
 app.get('/error', function (req, res) {
     res.render('index', {
-        message: req.flash("error"),
+        message:  req.query.message || req.flash("error"),
         user: req.user,
         adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false,
     });

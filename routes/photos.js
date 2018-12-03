@@ -10,19 +10,26 @@ router.get('/page/:short_name', Auth.checkAuth, async function (req, res) {
 	try {
 		const pic = await Picture.getByShortName(short_name).populate('author').populate('album', 'name');
 
-		if (pic.author.id == req.user.id || req.user.role === "admin")
-			res.render('picture', {
-				picture: pic,
-				user: req.user,
-				adminRole: req.user
-					? req.user.role === 'admin' ? true : false
-					: false,
-			});
-		else {
-			res.status(403);
-			req.flash("error", "403\n Forbidden");
-			res.redirect("/error");
-		}
+		// if (pic.author.id == req.user.id || req.user.role === "admin")
+		// 	res.render('picture', {
+		// 		picture: pic,
+		// 		user: req.user,
+		// 		adminRole: req.user
+		// 			? req.user.role === 'admin' ? true : false
+		// 			: false,
+		// 	});
+		// else {
+		// 	res.status(403);
+		// 	req.flash("error", "403\n Forbidden");
+		// 	res.redirect("/error");
+		// }
+		res.render('picture', {
+			picture: pic,
+			user: req.user,
+			adminRole: req.user
+				? req.user.role === 'admin' ? true : false
+				: false,
+		});
 	} catch (err) {
 		res.status(500);
 		req.flash("error", "500\n Internal Server Error");
@@ -62,17 +69,13 @@ router.get('/:short_name/update', Auth.checkAuth, async function (req, res) {
 			res.redirect("/error");
 		} else {
 
-			const data = {
-				update: true,
-				pic,
+			res.render('updatePicture', {
+				name: req.params.short_name,
 				user: req.user,
-				message: req.flash("updatePicError"),
 				adminRole: req.user
 					? req.user.role === 'admin' ? true : false
 					: false,
-			};
-
-			res.render('updatePicture', data);
+			});
 		}
 	} catch (err) {
 		req.flash("error", "500\n Internal Server Error");

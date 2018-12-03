@@ -3,9 +3,6 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const BasicStrategy = require('passport-http').BasicStrategy;
 
-// const passportJWT = require("passport-jwt");
-// const JWTStrategy = passportJWT.Strategy;
-// const ExtractJWT = passportJWT.ExtractJwt;
 
 const User = require('../models/user');
 const Hash = require("../config/hash");

@@ -11,54 +11,50 @@
 
 </head>
 
-<body>
+<body class="text-center" style="width: 100%; height:100%; background-color: #333;">
 
   {{>menu}}
 
-  
 
-  <form action="/new/album" method="POST" enctype="multipart/form-data" class="form-horizontal">
-    <fieldset>
+  <div class="album-photo-form ">
+    <div class="container">
 
-      <legend class="legend">Create new album</legend>
+      <form action="/new/album" method="POST">
+        <fieldset>
 
-      {{#message}}
-      <div class="newPicError">
-        <p>{{message}}</p>
-      </div>
-      {{/message}}
-      
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="album_name">Unique Id</label>
-        <div class="col-md-4">
-          <input id="album_name" name="album_name" type="text" placeholder="Short uniqe name for your album" class="form-control input-md"
-            required="" pattern="[a-zA-Z][A-Za-z0-9_.]{1,10}" title=" name must start with a letter ,could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 10 characters" >
-          <span class="help-block">Your id should be unique. If you have album with id : " Cats", now you should
-            use for instanse "Cats2" e.t.c.</span>
-        </div>
-      </div>
+          <legend class="legend">Create new album</legend>
 
-      <!-- File Button
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="filebutton">Choose the picture</label>
-        <div class="col-md-4">
-          <input name="pictureFile" class="input-file" type="file" accept="image/*" required>
-
-        </div>
-      </div> -->
-
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <div class="col-md-4">
-          <button type="submit" name="submit" class="btn btn-inverse">Submit</button>
-        </div>
-      </div>
-
-    </fieldset>
-
-  </form>
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              <input id="album_name" name="album_name" type="text" placeholder="Short uniqe name for your album" class="form-control input-md"
+                required="" pattern="[a-zA-Z][A-Za-z0-9_.]{1,10}" title=" name must start with a letter ,could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 10 characters">
+            </div>
 
 
+          </div>
+
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              {{#message}}
+              <p class="mt-3 mb-3 error-message">{{message}}</p>
+              {{/message}}
+              <hr color='white' />
+            </div>
+          </div>
+
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              <button type="submit" name="submit" class="btn btn-outline-light">Submit</button>
+            </div>
+          </div>
+
+
+        </fieldset>
+
+      </form>
+
+    </div>
+  </div>
   {{>footer}}
 
 </body>

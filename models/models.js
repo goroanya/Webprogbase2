@@ -68,6 +68,9 @@ const AlbumSchema = new mongoose.Schema({
             ref: 'Picture',
         },
     ],
+    coverUrl : {
+        type: String
+    }
 });
 
 AlbumSchema.plugin(uniqueValidator);

@@ -8,7 +8,7 @@
     <meta name="description" content="Registration" />
 </head>
 
-<body class="text-center">
+<body class="text-center" style="width: 100%; height:100%; background-color: #333;">
     {{>menu}}
     <form action="/auth/register" method="post" id="signup" class="form-signin">
         <img class="mb-4" src="/images/triangle.png" alt="logo" width="120" height="120">

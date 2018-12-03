@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const busboyBodyParser = require('busboy-body-parser');
 const passport = require('passport');
 
+let prettydate = require("pretty-date");
+
 const Auth = require("../config/auth");
 const Hash = require("../config/hash");
 const User = require('../models/user');
@@ -233,6 +235,9 @@ router.put("/albums/:album_name", authorize, Auth.checkAuthAPI, async function (
 
 });
 
+
+
+
 //-----------------------------------------------PICTURES-----------------------------------------------------
 router.get("/photos", authorize, Auth.checkAuthAPI, async function (req, res) {
 
@@ -251,6 +256,15 @@ router.get("/photos", authorize, Auth.checkAuthAPI, async function (req, res) {
             let photos = req.query.album
                 ? (await Picture.getAllInAlbum(req.query.album, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs
                 : (await Picture.getAll(req.user, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs;
+
+
+            for (let photo of photos) {
+                //todo
+                photo.prettydate = prettydate.format(new Date(photo.createdAt));
+            }
+         
+
+            
 
             res.status(200).json({ photos });
         }
@@ -290,13 +304,13 @@ router.get("/photos/:name", authorize, Auth.checkAuthAPI, async function (req, r
         const pic = await Picture.getByShortName(name).populate('author', "login").populate("author", 'login').populate("album", "name");
 
         if (!pic) {
-            res.status(404).json({ message: "Picture with this name is not found", name });
+            res.status(404).json({ message: `Picture with  name ${name} is not found` });
             return;
         }
-        if (pic.author.id == req.user.id || req.user.role === "admin")
-
+        if (pic.author.id == req.user.id || req.user.role === "admin") {
+            //pic.createdAt = prettydate.format(new Date(pic.createdAt));
             res.status(200).json(pic);
-
+        }
         else {
 
             res.status(403).json({ message: "Forbidden" });

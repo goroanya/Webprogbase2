@@ -53,6 +53,11 @@ class Album {
         await album.save();
 
     }
+    static async setCover(albumId, url){
+        let album = await models.Album.findById(albumId);
+        album.coverUrl = url;
+        await album.save();
+    }
 
     static async deletePhoto(albumId, picId) {
         let album = await models.Album.findById(albumId);

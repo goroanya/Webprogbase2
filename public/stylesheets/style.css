@@ -476,7 +476,7 @@ div.myPagination {
     text-align: center;
 }
 
-.empty {
+.empty h1{
     position: absolute;
     top: 400px;
     left: 40%;

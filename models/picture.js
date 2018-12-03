@@ -1,6 +1,7 @@
 const models = require("./models");
 const Album = require("./album");
 const User = require("./user");
+let pretty = require('pretty-date-js');
 
 function paginate(entities, page, entitiesPerPage) {
     const firstEntityIndex = (page - 1) * entitiesPerPage;
@@ -32,9 +33,11 @@ class Picture {
         let photos = await models.Picture.find({ "album": album.id });
         let foundArray = [];
         for (let photo of photos) {
-            if (photo.short_name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) foundArray.push(photo);
+            if (photo.short_name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
+                photo.createdAt = pretty(photo.createdAt, {});
+                foundArray.push(photo);
+            }
         }
-
         foundArray = paginate(foundArray, page, picturesPerPage);
 
         return foundArray;
@@ -91,6 +94,8 @@ class Picture {
             if (!album) {
                 album = await Album.insert({ name: pic.album_name, author: pic.author, photos: [] });
             }
+            Album.setCover(album.id, pic.url);
+
             pic.album = album.id;
             const savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);

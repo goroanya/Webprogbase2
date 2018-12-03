@@ -1,9 +1,6 @@
 {{#empty}}
-<div class="empty">
-    <h2> The album "{{album}}" is empty</h2>
-</div>
+<h1 class="text-center empty">album is empty</h1>
 {{/empty}}
-
 
 
 
@@ -12,18 +9,27 @@
 {{^search}}
 
 
+<div class="album py-5 bg-dark">
+    <div class="container">
+        <div class="row" id="gallery">
+            {{#photos}}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="{{url}}" alt="picture with short name: {{short_name}}">
+                    <div class="card-body">
+                        <p class="card-text">{{short_name}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary"><a href="/photos/page/{{short_name}}">View</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/photos}}
 
-<div id="gallery" class="gallery">
-
-    {{#photos}}
-    <div id="photoContainer" class="thumbnail">
-        <a href="/photos/page/{{short_name}}">
-            <img src="{{url}}" alt="picture with short name: {{short_name}}">
-            <h2>{{short_name}}</h2>
-        </a>
+        </div>
     </div>
-    {{/photos}}
-
 </div>
 
 
@@ -33,41 +39,33 @@
 
 
 {{#search}}
+<div class="album py-5 bg-dark">
+    <div class="container">
+        <div class="row" id="galleryFiltered">
 
+            {{#photos}}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="{{url}}" alt="picture with short name: {{short_name}}">
+                    <div class="card-body">
+                        <p class="card-text">{{short_name}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary"><a href="/photos/page/{{short_name}}">View</a></button>
+                            </div>
+                            <small class="text-muted">{{createdAt}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/photos}}
 
-{{#found}}
-
-<div class="found_or_not">
-    <h3> Found pictures by request : {{request}}</h3>
-</div>
-
-<div  id = "galleryFiltered" class="gallery">
-    {{#photos}}
-    <div id="photoContainer" class="thumbnail">
-        <a href="/photos/page/{{short_name}}">
-            <img src="{{url}}" alt="picture with short name: {{short_name}}">
-            <h2>{{short_name}}</h2>
-        </a>
+        </div>
     </div>
-    {{/photos}}
-
 </div>
 
 
 </div>
-
-{{/found}}
-
-
-
-{{^found}}
-
-<div class="found_or_not">
-    <h3>Nothing found by request : "{{request}}"</h3>
-</div>
-
-{{/found}}
-
 
 {{/search}}
 {{/empty}}
