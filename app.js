@@ -101,7 +101,7 @@ app.post('/new/album', Auth.checkAuth, function (req, res) {
     try {
 
         Album.insert(album);
-        res.redirect('/albums?page=1');
+        res.redirect('/albums');
 
     } catch (err) {
         res.redirect("/error");
@@ -135,71 +135,11 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
                 if (album_name) res.redirect(`/albums/${album_name}/new`);
                 else { }// ! TODО перенаправити на обнобник, що додає ТІЛЬКИ  тимчаосву фотографію
             }
-            //res.redirect("/error");
         }
 
     });
 
 
-});
-
-app.post('/update/picture', Auth.checkAuth, async function (req, res) {
-    const description = req.body.description;
-    const short_name = req.body.short_name;
-    const oldShort_name = req.body.old_short_name;
-    const id = req.body.id;
-
-    let pic = { short_name, description, author: req.user };
-
-    try {
-        const result = await Picture.update(id, pic);
-
-        if (result === 403) {
-            req.flash("error", "403\n Forbidden");
-            res.redirect("/error");
-        }
-        else if (result === 404) {
-            req.flash("error", "404\n Picture is Not Found");
-            res.redirect("/error");
-        }
-        else {
-            res.redirect(`/photos/page/${result.short_name}`);
-        }
-
-    } catch (err) {
-
-        req.flash("updatePicError", "This short name is already taken.");
-        res.redirect(`/photos/${oldShort_name}/update`);
-
-
-    }
-
-});
-app.post('/update/album', Auth.checkAuth, async function (req, res) {
-    const oldName = req.body.oldName;
-    const newName = req.body.name;
-    try {
-        const album = await Album.getByName(oldName);
-        if (!album) {
-            req.flash("error", "404\n Album  is Not Found");
-            res.redirect("/error");
-        }
-        else if (album.author != req.user.id) {
-            req.flash("error", "403\n Forbidden");
-            res.redirect("/error");
-        }
-        else {
-            await Album.update(oldName, newName);
-            res.redirect('/albums?page=1');
-        }
-    }
-    catch (err) {
-
-        req.flash("updateAlbumError", "This name is already taken.");
-        res.redirect(`/albums/${oldName}/update`);
-
-
-    }
 });
 
 app.get('/error', function (req, res) {

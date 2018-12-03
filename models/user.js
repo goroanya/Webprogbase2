@@ -11,8 +11,11 @@ class User {
         this.createdAt = new Date();
     }
 
-    static async getAll() {
-        return models.User.find();
+    static async getAll(page, usersPerPage) {
+        return models.User.paginate({}, { page, limit: usersPerPage });
+    }
+    static getAllLength() {
+        return models.User.countDocuments();
     }
     static insert(user) {
         return models.User(user).save();

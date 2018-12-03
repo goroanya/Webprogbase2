@@ -8,8 +8,6 @@
 <div class="album py-5 bg-dark">
     <div class="container">
         <div class="row">
-
-        
             {{#albums}}
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">

@@ -15,10 +15,10 @@
 <body style="width: 100%; height:100%; background-color: #333;">
     {{>menu}}
 
-    <div class="container" style="color:white">
-        <div class="developer">
-            <div class="devText" style>
-                <h1>Keep the moment REST API v1 Documentation</h1>
+    <div class="container" >
+        <div class="developer text-white">
+            <div class="devText mt-6" >
+                <h1><br><br>Keep the moment REST API v1 Documentation</h1>
                 <h3><b>Requests</b></h3>
                 <p>
                     You are able to make GET, POST, PUT and DELETE requests to get, create new, update

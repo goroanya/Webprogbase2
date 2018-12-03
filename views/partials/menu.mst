@@ -29,7 +29,7 @@
     {{/user}}
 
     {{^user}}
-    <a class="btn btn-outline-light" href="/auth/login">Log In</a>
-    <a class="btn btn-outline-light" style="margin-left: 10px;" href="/auth/register">Sign Up</a>
+    <a class="btn btn-outline-light"  href="/auth/register">Sign Up</a>
+    <a class="btn btn-outline-light" style="margin-left: 10px;" href="/auth/login">Log In</a>
     {{/user}}
 </nav>

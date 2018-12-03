@@ -15,42 +15,77 @@
 
   {{>menu}}
 
-  <input type="hidden" name="oldName" value="{{album_name}}">
+  <input type="hidden" id="oldName"  value="{{album_name}}">
 
 
   <div class="album-photo-form ">
     <div class="container">
-      <form action="/update/album" method="POST">
+      <form id="updateForm" action="" method="GET" >
         <fieldset>
           <legend class="legend">Update album</legend>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
               <input id="album_name" name="album_name" type="text" value="{{album_name}}" placeholder="Short uniqe name for your album"
-                class="form-control input-md" required="" pattern="[a-zA-Z][A-Za-z0-9_.]{1,10}" title=" name must start with a letter ,could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 10 characters">
+                class="form-control input-md" required=""  title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 3 characters but no more than 15 characters">
             </div>
           </div>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              {{#message}}
-              <p class="mt-3 mb-3 error-message">{{message}}</p>
-              {{/message}}
+              <p id="error" class="mt-3 mb-3 error-message"></p>
               <hr color='white' />
             </div>
           </div>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <button type="submit" name="submit" class="btn btn-outline-light">Update</button>
+              <button type="submit" hidden></button>
             </div>
           </div>
+          
         </fieldset>
       </form>
+
+      <div class="form-group row justify-content-center">
+        <div class="col-md-4">
+          <button id="albumUpdateButton" type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#updateModal">Update</button>
+        </div>
+      </div>
+
     </div>
   </div>
   
+
+
+<!-- Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>You are about to update album name.</p>
+          <p id="modal-error" class="mt-3 mb-3 error-message text-center"></p>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" id="confirmUpdateButton" class="btn btn-dark">Update</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   {{>footer}}
+
+  <script src="/javascripts/albumUpdate.js"></script>
+
 
 </body>
 

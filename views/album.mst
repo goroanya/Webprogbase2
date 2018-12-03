@@ -28,7 +28,7 @@
         </div>
         <div class="modal-body">
           <p>You are about to delete album and all of its photos.
-            </br>
+            <br>
             <span style="font-weight:bold">This operation is permanent and cannot be undone.</span>
           </p>
 

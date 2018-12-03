@@ -47,7 +47,7 @@
         <label>
             <input type="checkbox" value="remember-me" required> I accept the terms of use
         </label>
-        <button class="btn btn-lg btn-dark btn-block" type="submit" name="submit" id="submit">Log in</button>
+        <button class="btn btn-lg btn-dark btn-block" type="submit" name="submit" id="submit">Sign Up</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
 
     </form>

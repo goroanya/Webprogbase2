@@ -4,8 +4,7 @@
 <head>
 
   {{>head}}
-  <title>Create new picture </title>
-  <meta name="description" content="New picture">
+
   <title>Update picture</title>
   <meta name="description" content="New picture">
 
@@ -17,21 +16,19 @@
 
   {{>menu}}
 
-  <input type="hidden" name="album_name" value="{{pic.album.name}}">
-  <input type="hidden" name="old_short_name" value="{{pic.short_name}}">
-  <input type="hidden" name="id" value="{{pic.id}}">
+  <input type="hidden" id="old_short_name" value="{{pic.short_name}}">
 
   <div class="album-photo-form ">
     <div class="container">
 
-      <form action="/update/picture" method="POST" enctype="multipart/form-data">
+      <form id="updateForm" action="" method="GET">
         <fieldset>
           <legend class="legend"> Update picture </legend>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
               <input id="short_name" name="short_name" value="{{pic.short_name}}" type="text" placeholder="Short uniqe name for your photo"
-                class="form-control input-md" required="" pattern="[a-zA-Z][A-Za-z0-9_.]{1,15}" title=" name must start with a letter ,could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 15 characters">
+                class="form-control input-md" required="" title=" name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 5 characters but no more than 15 characters">
 
             </div>
           </div>
@@ -45,21 +42,24 @@
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <p id ="error-message" class="mt-3 mb-3 error-message"></p>
+              <p id="error" class="mt-3 mb-3 error-message"></p>
               <hr color='white' />
             </div>
           </div>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-
-              <button id="albumUpdateButton" class="btn btn-outline-light" data-toggle="modal" data-target="#updateModal">Update</button>
-
+              <button type="submit" hidden></button>
             </div>
           </div>
         </fieldset>
 
       </form>
+      <div class="form-group row justify-content-center">
+        <div class="col-md-4">
+          <button id="photoUpdateButton" type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#updateModal">Update</button>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -75,19 +75,21 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>You are about to update album.</p>
+          <p>You are about to update picture data.</p>
+          <p id="modal-error" class="mt-3 mb-3 error-message text-center"></p>
         </div>
         <div class="modal-footer">
-          <form  id="updateForm">
-            <button type="submit" id="confirmUpdateButton" class="btn btn-dark">Update</button>
-          </form>
+
+          <button type="button" id="confirmUpdateButton" class="btn btn-dark">Update</button>
+
         </div>
       </div>
     </div>
   </div>
 
-
   {{>footer}}
+
+  <script src="/javascripts/pictureUpdate.js"></script>
 
 </body>
 

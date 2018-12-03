@@ -69,30 +69,7 @@ router.get('/:album_name', Auth.checkAuth, async function (req, res) {
 
 });
 
-router.post('/:album_name/delete', Auth.checkAuth, async function (req, res) {
-	try {
-		const album = await Album.getByName(req.params.album_name);
-		if (!album) {
-			req.flash("error", "404\n Album  is Not Found");
-			res.redirect("/error");
-		}
-		else if (album.author != req.user.id && req.user.role !== "admin") {
-			req.flash("error", "403\n Forbidden");
-			res.redirect("/error");
-		}
-		else {
-			await Album.delete(req.params.album_name);
-			res.redirect('/albums');
-		}
-	}
-	catch (err) {
-		res.status(500);
-		req.flash("error", "500\n Internal Server Error");
-		res.redirect("/error");
-	}
 
-
-});
 router.get('/:album_name/new', Auth.checkAuth, async function (req, res) {
 	try {
 

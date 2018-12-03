@@ -8,51 +8,98 @@
   <title>{{userProfile.fullname}}</title>
   <meta name="description" content="page of {{userProfile.fullname}}">
   <link type="text/css" href="/stylesheets/user.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
 
 
 
 
 </head>
 
-<body>
+<body class="text-center" style="width: 100%; height:100%; background-color: #333;">
 
   {{>menu}}
 
- 
 
 
-  <div class="card">
-    <div class="box">
-      <div class="img">
-        <img src="{{userProfile.avaUrl}}">
+
+  <div class="mycontainer">
+    <div class="card   text-light bg-dark ">
+      <div class="card-img-top mt-5 mx-auto ">
+        <img class="rounded" src="{{userProfile.avaUrl}}">
       </div>
-      <h1>{{userProfile.login}}<br>
+      <div class="card-body">
+        <h1 id="login" class="my-5">{{userProfile.login}}<br>
 
-        {{#adminRole}}
-        <span>{{userProfile.role}}
-        </span>
+          {{#adminRole}}
+          <h3 id="userRole" class="user-role my-1">{{userProfile.role}}</h3>
 
-        <div class="selectRole">
-          <form action="/users/{{userProfile.login}}/updateRole" method="POST">
-
-            <select name="role" class="form-control" id="sel1">
+          <div class="selectRole">
+            <select id="roles" name="role" class="form-control mt-4 mb-4">
+              <option selected value="none"> Choose role </option>
               <option value="simple">simple user</option>
-              <option selected value="admin">admin</option>
+              <option value="admin">admin</option>
             </select>
+
+          </div>
+          {{/adminRole}}
+
+        </h1>
+        <h3 class="my-1">Fullname : {{userProfile.fullname}}</h3>
+        <h5 class="my-1">Bio</h5>
+        <p class="mx-auto "> {{{userProfile.bio}}}</p>
+
+      </div>
+      <div class="card-footer">
+        <hr color="white">
+        <button class="btn btn-outline-light btn-lg"> See albums</button>
+        <hr color="white">
+
+
+
+
+
+        <div class="container">
+          <div class="row">
+            <div class="row">
+
+              {{#userProfile.tempPhotos}}
+              <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="{{url}}" data-image-id="" data-toggle="modal" data-title="{{short_name}}"
+                  data-image="{{url}}" data-target="#image-gallery">
+                  <img class="img-thumbnail" src="{{url}}" alt="{{short_name}}">
+                </a>
+              </div>
+              {{/userProfile.tempPhotos}}
+            </div>
+
+
+            <div class="modal   fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content text-light bg-dark">
+                  <div class="modal-header">
+                    <h4 class="modal-title text-center" id="image-gallery-title"></h4>
+                    <button type="button" class="close text-light" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                    </button>
+
+                    <button type="button" id="show-next-image" class="btn btn-outline-light float-right"><i class="fa fa-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <button type="submit" class="btn btn-light btn-sm">Change role</button>
-        </form>
-        {{/adminRole}}
-        
-      </h1>
-      <h3>{{userProfile.fullname}}</h3>
-      <h5>Bio</h5>
-      <p> {{{userProfile.bio}}}</p>
-      <!-- <span>
-        <a href="{{userProfile.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-      </span> -->
+      </div>
     </div>
   </div>
 
@@ -60,13 +107,7 @@
 
   {{>footer}}
 
-</body>
-
-</html>
-
-
-{{>footer}}
-
+  <script src="/javascripts/user.js"></script>
 </body>
 
 </html>

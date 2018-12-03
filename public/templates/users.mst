@@ -1,0 +1,51 @@
+<table class="table text-center mt-5 table-dark">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col-6">Users</th>
+            {{#adminRole}}
+            <th scope="col-6">Role</th>
+            {{/adminRole}}
+
+        </tr>
+    </thead>
+    <tbody>
+        {{#users}}
+        <tr>
+            <td>
+                <img class="rounded img-responsive float-left" src={{avaUrl}} alt="avatar" width="15%" height="25%">
+                <p>Login:
+                    <a href="/users/{{login}}">{{login}}</a>
+                </p>
+                {{#fullname}}
+                <p>Fullname: {{fullname}}</p>
+                {{/fullname}}
+            </td>
+            {{#adminRole}}
+            <td>
+                <h5 class="mx-auto"><b>{{role}}</b></h5>
+            </td>
+            {{/adminRole}}
+        </tr>
+        {{/users}}
+
+    </tbody>
+</table>
+
+
+
+
+
+<div class="btn-group btn-group-justified text-center mx-auto" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2 " role="group" aria-label="First group">
+
+        <button type="button" class="btn btn-outline-light btn-md" {{^prev}} disabled {{/prev}} onclick="goToPage({{prev}});">
+            <<</button> </div> <div class="btn-group mr-2" role="group" aria-label="Second group">
+                {{#pageCounterArray}}
+                <button type="button" {{#current}} class="btn btn-secondary btn-md" {{/current}} {{^current}} class="btn  btn-outline-light btn-md"
+                    {{/current}} onclick="goToPage({{page}});">{{page}}</button>
+                {{/pageCounterArray}}
+    </div>
+    <div class="btn-group" role="group" aria-label="Third group">
+        <button type="button" {{^next}} disabled {{/next}} class="btn btn-outline-light btn-md" onclick="goToPage({{next}});">>></button>
+    </div>
+</div>

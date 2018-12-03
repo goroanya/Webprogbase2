@@ -1,23 +1,20 @@
 
-$("#albumDeleteButton").click(function () {
-    $("#deleteModal").modal();
-});
-
-
 $('#albumDeleteButton').click(function () {
-    let albumName = $('#album').val();
-    deleteConfirm(albumName);
+    deleteConfirm();
 });
 
-function deleteConfirm(albumName) {
+function deleteConfirm() {
 
     let modal = $("#deleteModal");
     modal.modal('show');
 
     $('#confirmDeleteButton').bind('click', async function () {
 
-        await fetch(`/api/v1/albums/${albumName}`, { method: "DELETE" });
+        let albumName = $('#album').text();
+        let result = await fetch(`/api/v1/albums/${albumName}`, { method: "DELETE" });
+        result = await result.json();
         $("deleteForm").submit();
 
     });
 };
+

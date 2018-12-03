@@ -1,17 +1,18 @@
 $('#photoDeleteButton').click(function () {
-    let photoName = $('#pictureName').html();
-    deleteConfirm(photoName);
+    deleteConfirm();
 });
 
-function deleteConfirm(photoName) {
+function deleteConfirm() {
 
     let modal = $("#deleteModal");
     modal.modal('show');
 
+    let photoName = $('#pictureName').html();
+    
     $('#confirmDeleteButton').bind('click', async function () {
 
         await fetch(`/api/v1/photos/${photoName}`, { method: "DELETE" });
-        $("deleteForm").submit();
+        $("#deleteForm").submit();
 
     });
 };

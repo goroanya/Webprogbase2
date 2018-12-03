@@ -69,7 +69,8 @@ const AlbumSchema = new mongoose.Schema({
         },
     ],
     coverUrl : {
-        type: String
+        type: String,
+        default: "https://increasify.com.au/wp-content/uploads/2016/08/default-image.png"
     }
 });
 
