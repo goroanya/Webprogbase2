@@ -92,7 +92,7 @@ const UserSchema = new mongoose.Schema({
     registeredAt: { type: Date },
     avaUrl: {
         type: String,
-        default: 'https://images-na.ssl-images-amazon.com/images/I/41VzFHkRlrL._SX425_.jpg',
+        default: 'https://ictv.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png',
     },
     bio: {
         type: String,

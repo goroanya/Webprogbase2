@@ -1,5 +1,5 @@
 {{#empty}}
-<h1 class="text-center empty">album is empty</h1>
+<h1 class="text-center empty">empty</h1>
 {{/empty}}
 
 

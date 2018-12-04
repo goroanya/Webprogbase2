@@ -27,10 +27,13 @@ class Picture {
         return models.Picture.findOne({ short_name: short_name });
     }
 
-    static async getAllFiltered(albumName, filter, page, picturesPerPage) {
+    static async getAllFiltered(albumName, owner, filter, page, picturesPerPage) {
 
         let album = await Album.getByName(albumName);
-        let photos = await models.Picture.find({ "album": album.id });
+        let photos = albumName
+            ? await models.Picture.find({ "album": album.id, author: owner.id }).sort({ 'createdAt': -1 })
+            : await models.Picture.find({ 'active': true, author: owner.id }).sort({ 'createdAt': -1 });
+
         let foundArray = [];
         for (let photo of photos) {
             if (photo.short_name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
@@ -43,19 +46,17 @@ class Picture {
         return foundArray;
 
     }
-    static getAll(user, page, picturesPerPage) {
-        if (user.role === "admin") return models.Picture.paginate({}, { page, limit: picturesPerPage });
-        else return models.Picture.paginate({ "author": user.id }, { page, limit: picturesPerPage });
+    static getAll(owner, page, picturesPerPage) {
+        return models.Picture.paginate({ "author": owner.id, 'active': true }, { page, limit: picturesPerPage, sort: { 'createdAt': -1 } });
     }
 
     static async getAllInAlbum(albumName, page, picturesPerPage) {
         let album = await Album.getByName(albumName);
-        return models.Picture.paginate({ "album": album.id }, { page, limit: picturesPerPage });
+        return models.Picture.paginate({ "album": album.id }, { page, limit: picturesPerPage, sort: { 'createdAt': -1 } });
     }
 
     static getAllLength(user) {
-        if (user.role === "admin") return models.Picture.countDocuments();
-        else return models.Picture.countDocuments({ "author": user.id });
+        return models.Picture.countDocuments({ "author": user.id });
     }
 
 
@@ -76,13 +77,10 @@ class Picture {
             await User.deleteTempPhoto(pic.author, pic.id);
         }
         return pic;
-
-
-
-
     }
 
     static async  insert(pic) {
+        let savedPic;
         if (pic.album_name) {
             // якщо нам передали ім"я альбому, то картинка вже НЕ ТІЛЬКИ ТИМЧАСОВА і буде зберігатись в альбомі
 
@@ -97,22 +95,37 @@ class Picture {
             Album.setCover(album.id, pic.url);
 
             pic.album = album.id;
-            const savedPic = await models.Picture(pic).save();
+            savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);
             await Album.addPhoto(pic.album, savedPic.id);
-
-            return savedPic;
-
         }
         else {
-            // якщо картинка тільки тимчасова, ми  не додаємо  її в альбом, але додаємо до тимчасових картинкох користувача
+            // якщо картинка тільки тимчасова, ми  не додаємо  її в альбом, але додаємо до тимчасових картинок користувача
 
-            const savedPic = await models.Picture(pic).save();
+            savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);
-            return savedPic;
-
         }
+        let time = 86400000;// 24 hours 
+        setTimeout(async () => {
+            try {
 
+                // змінюємо статус картинки active = false
+                let copy = savedPic;
+                copy.active = false;
+                await this.update(savedPic.id, copy);
+
+                //видаляємо картинку з тимчасових картинок користувача
+                await User.deleteTempPhoto(copy.author, copy.id);
+
+                //якщо картинку не зберегли в альбом-видаляємо її з бази даних
+                if(!copy.album) await models.Picture.findOneAndRemove({ short_name: copy.short_name });
+            } catch (err) {
+                console.log(err);
+            }
+        }, time);
+
+
+        return savedPic;
     }
 
     static async update(id, pic) {
@@ -123,6 +136,7 @@ class Picture {
         else {
             if (pic.short_name) pictureToUpdate.short_name = pic.short_name;
             if (pic.description) pictureToUpdate.description = pic.description;
+            if (pic.active) pictureToUpdate.active = pic.active;
             return models.Picture.findByIdAndUpdate(id, pictureToUpdate, { new: true });
         }
     }

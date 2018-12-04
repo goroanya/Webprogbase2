@@ -43,6 +43,7 @@ function updateConfirm() {
                 $('#error-message').html(result.message);
             }
             else {
+            
                 $("#updateForm").attr('action', `/photos/page/${result.short_name}`);
 
                 $("#updateForm").submit();

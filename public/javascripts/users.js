@@ -1,4 +1,4 @@
-const usersPerPage = 2;
+const usersPerPage = 4;
 
 async function renderUsers() {
     try {

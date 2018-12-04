@@ -32,6 +32,7 @@ class User {
 
         if (user.fullname) toUpdate.fullname = user.fullname;
         if (user.role) toUpdate.role = user.role;
+        if (user.bio) toUpdate.bio = user.bio;
         if (user.avaUrl) toUpdate.avaUrl = user.avaUrl;
         if (user.password) toUpdate.password = user.password;
 
@@ -56,7 +57,6 @@ class User {
 
     }
 
-    //
     static async addTempPhoto(auhtorId, photoId) {
         let user = await models.User.findById(auhtorId);
         user.tempPhotos.push(photoId);

@@ -15,15 +15,17 @@
 
     {{>menu}}
 
-    <div class="picture-card">
+    <div class="picture-card mb-5">
         <div class="container ">
             <div class="card text-center">
                 <div class="card-header justify-content-end">
+                {{#canModify}}
                     <p>
                         <a id="photoUpdateButton" href="/photos/{{picture.short_name}}/update" class="btn btn-outline-dark my-2">Update</a>
                         <button type="button" id="photoDeleteButton" name="deleteAlbum" class="btn btn-outline-danger mybtn"
                             data-toggle="modal" data-target="#deleteModal">Delete</button>
                     </p>
+                {{/canModify}}
                 </div>
                 <img class="card-img-top" src="{{picture.url}}" alt="picture">
                 <div class="card-body">

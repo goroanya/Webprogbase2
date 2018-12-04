@@ -1,5 +1,5 @@
 
-let nameRegExpr = /^[a-zA-Z_\d\-]+$/;
+let nameRegExpr = /^[a-zA-Z_.\d\-]+$/;
 
 $('#short_name').on('input', function () {
     let value = $('#short_name').val();
@@ -17,6 +17,6 @@ $('#short_name').on('input', function () {
 
 $('#myForm').submit(function (e) {
     let error = $('#error').html();
-    if (error === "")e.submit();
-    else  e.preventDefault();
+    if (error === "") $('#myForm').submit();
+    else e.preventDefault();
 });

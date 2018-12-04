@@ -19,7 +19,7 @@
   <div class="album-photo-form ">
     <div class="container">
 
-      <form id="myForm" action="/new/album" method="POST">
+      <form id="myForm" action="" method="get">
         <fieldset>
 
           <legend class="legend">Create new album</legend>
@@ -42,7 +42,7 @@
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <button type="submit" name="submit" class="btn btn-outline-light">Submit</button>
+              <button type="submit"  class="btn btn-outline-light">Submit</button>
             </div>
           </div>
 

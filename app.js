@@ -1,5 +1,7 @@
 const Picture = require('./models/picture');
 const Album = require('./models/album');
+const User = require('./models/user');
+
 
 const Auth = require("./config/auth");
 const Cloudinary = require("./config/cloudinary");
@@ -90,26 +92,6 @@ app.get('/', function (req, res) {
     });
 });
 
-
-
-
-
-app.post('/new/album', Auth.checkAuth, function (req, res) {
-    const album_name = req.body.album_name;
-    const album = new Album(album_name, req.user, []);
-
-    try {
-
-        Album.insert(album);
-        res.redirect('/albums');
-
-    } catch (err) {
-        res.redirect("/error");
-        req.flash("error", "500\n Internal Server Error");
-    }
-
-});
-
 app.post('/new/picture', Auth.checkAuth, function (req, res) {
     const pictureFile = req.files.pictureFile;
 
@@ -117,8 +99,6 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
     const short_name = req.body.short_name;
     const album_name = req.body.album_name;;
 
-    //remember datetime before saving picture to cloudinary (if internet is lost)
-    const dateTime = Date.now();
 
     Cloudinary.fileUpload(pictureFile.data, async (err, url) => {
         if (err) {
@@ -127,24 +107,72 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
         } else {
             try {
 
-                const saved = await Picture.insert(new Picture(true, short_name, album_name, description, url, req.user, dateTime));
+                const saved = await Picture.insert(new Picture(true, short_name, album_name, description, url, req.user, Date.now()));
                 res.redirect('/photos/page/' + saved.short_name);
 
             } catch (error) {
-                req.flash("addPicError", `This short name (${short_name}) is already taken.`);
-                if (album_name) res.redirect(`/albums/${album_name}/new`);
-                else { }// ! TODО перенаправити на обнобник, що додає ТІЛЬКИ  тимчаосву фотографію
+                req.flash("error", "500 internal server error");
+                res.redirect('/error');
             }
         }
 
     });
+});
 
+app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
+    const avaFile = req.files.avaUrlFile;
+
+    if (req.params.login != req.user.login) {
+        req.flash("error", "403 Forbidden");
+        res.redirect('/error');
+        return;
+    }
+    try {
+        if (avaFile) {
+            Cloudinary.fileUpload(avaFile.data, async (err, url) => {
+                if (err) {
+                    req.flash("error", "Sorry.Error with uploading picture.");
+                    res.redirect("/error");
+
+                } else {
+
+                    const updated = await User.update(req.params.login, {
+                        fullname: req.body.fullname,
+                        bio: req.body.userBio,
+                        avaUrl: url,
+                    });
+                    if (updated) res.redirect('/users/' + updated.login);
+                    else res.redirect('/error?message=500+Internal+server+error');
+
+                }
+
+            });
+        } else {
+
+            const updated = await User.update(req.params.login, {
+                fullname: req.body.fullname,
+                bio: req.body.userBio
+            });
+            if (updated) res.redirect('/users/' + updated.login);
+            else res.redirect('/error?message=500+Internal+server+error');
+
+        }
+    } catch (error) {
+        console.log(error);
+        req.flash("error", "500 internal server error");
+        res.redirect('/error');
+    }
 
 });
 
 app.get('/error', function (req, res) {
+
+    let message = req.query.message;
+    if (req.query.message)
+        message = message.replace(/+/g, " ");
+
     res.render('index', {
-        message:  req.query.message || req.flash("error"),
+        message: message || req.flash("error"),
         user: req.user,
         adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false,
     });

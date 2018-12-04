@@ -25,9 +25,19 @@
 
   <div class="mycontainer">
     <div class="card   text-light bg-dark ">
+
+      <div class="card-header">
+        {{#canModify}}
+        <form action="/users/{{userProfile.login}}/update" method="GET" class="justify-content-end">
+          <button type="submit" class="btn btn-outline-light">Update profile</button>
+        </form>
+      </div>
+      {{/canModify}}
+
       <div class="card-img-top mt-5 mx-auto ">
         <img class="rounded" src="{{userProfile.avaUrl}}">
       </div>
+
       <div class="card-body">
         <h1 id="login" class="my-5">{{userProfile.login}}<br>
 
@@ -46,19 +56,18 @@
 
         </h1>
         <h3 class="my-1">Fullname : {{userProfile.fullname}}</h3>
-        <h5 class="my-1">Bio</h5>
-        <p class="mx-auto "> {{{userProfile.bio}}}</p>
+        <p class="mx-auto ">Bio <br>{{userProfile.bio}}</p>
 
       </div>
       <div class="card-footer">
         <hr color="white">
-        <button class="btn btn-outline-light btn-lg"> See albums</button>
+        <p>
+          <a href="/users/{{userProfile.login}}/albums" class="btn btn-outline-light btn-lg mr-2">Albums</a>
+          <a href="/users/{{userProfile.login}}/stories" class="btn btn-outline-light btn-lg ml-2">Stories(search)</a>
+        </p>
         <hr color="white">
 
-
-
-
-
+        <h1>Stories</h1>
         <div class="container">
           <div class="row">
             <div class="row">
@@ -66,7 +75,7 @@
               {{#userProfile.tempPhotos}}
               <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="{{url}}" data-image-id="" data-toggle="modal" data-title="{{short_name}}"
-                  data-image="{{url}}" data-target="#image-gallery">
+                  data-value="{{description}}" data-image="{{url}}" data-target="#image-gallery">
                   <img class="img-thumbnail" src="{{url}}" alt="{{short_name}}">
                 </a>
               </div>
@@ -86,6 +95,7 @@
                   </div>
                   <div class="modal-body">
                     <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                    <p id="image-gallery-body"></p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-light float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>

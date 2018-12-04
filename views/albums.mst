@@ -14,12 +14,15 @@
     <div class="container bg-dark " >
         <section class="jumbotron text-center bg-light">
             <div class="container">
-                <h1 class="jumbotron-heading">My albums</h1>
+                <h1 class="jumbotron-heading">{{owner}} albums</h1>
+                {{#canModify}}
                 <p>
                     <a href="/albums/new" class="btn btn-secondary my-2">Add new album</a>
                 </p>
+                {{/canModify}}
             </div>
         </section>
+        <input hidden id="owner" value="{{owner}}">
         <div id="albums" class="container "></div>
     </div>
 

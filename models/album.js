@@ -17,12 +17,10 @@ class Album {
     }
 
     static getAll(user, page, albumPerPage) {
-        if (user.role === "admin") return models.Album.paginate({}, { page, limit: albumPerPage });
-        else return models.Album.paginate({ "author": user.id }, { page, limit: albumPerPage });
+        return models.Album.paginate({ "author": user.id }, { page, limit: albumPerPage });
     }
     static getAllLength(user) {
-        if (user.role === "admin") return models.Album.countDocuments();
-        else return models.Album.countDocuments({ "author": user.id });
+        return models.Album.countDocuments({ "author": user.id });
     }
 
     static getByName(albumName) {

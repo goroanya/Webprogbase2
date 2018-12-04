@@ -133,3 +133,13 @@ html {
     margin-top: 10%;
 }
 
+.user-profile-form {
+    top: 15%;
+    position: absolute;
+    width: 100%;
+    justify-content: center;
+}
+
+.picture-profile {
+    position: relative;
+}

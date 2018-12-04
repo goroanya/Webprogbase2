@@ -1,7 +1,8 @@
 async function renderAlbums() {
     try {
 
-        let itemsData = await fetch("/api/v1/albums?page=" + localStorage.page);
+        let owner = $('#owner').val();
+        let itemsData = await fetch(`/api/v1/albums?page=${localStorage.page}&owner=${owner}`);
         itemsData = await itemsData.json();
 
         let templateStr = await fetch("/templates/albums.mst");

@@ -1,8 +1,7 @@
 
-let nameRegExpr = /^[a-zA-Z_\d\-]+$/;
+let nameRegExpr = /^[a-zA-Z_.\d\-]+$/;
 
 $('#album_name').on('input', function () {
-    console.log("here")
     let value = $('#album_name').val();
 
     let test = nameRegExpr.test(value);
@@ -16,8 +15,30 @@ $('#album_name').on('input', function () {
     }
 });
 
-$('#myForm').submit(function (e) {
+$('#myForm').submit( async function (e) {
     let error = $('#error').html();
-    if (error === "")e.submit();
-    else  e.preventDefault();
+
+    if (error === "") {
+
+        let result = await fetch(`/api/v1/albums`, {
+            method: "POST",
+            body: JSON.stringify({ name: $('#album_name').val() }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+        });
+        result = await result.json();
+
+        if (result.message) {
+            $('#error').html(result.message);
+           
+        }
+        else {
+            //todo albums/objectId
+            $("#myForm").attr('action', `/albums/${result.name}`);
+            $("#myForm").submit();
+        }
+
+    }
+    else e.preventDefault();
 });

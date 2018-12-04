@@ -45,7 +45,6 @@ function updateConfirm() {
             }
             else {
                 $("#updateForm").attr('action', `/albums/${result.name}`);
-
                 $("#updateForm").submit();
             }
         });

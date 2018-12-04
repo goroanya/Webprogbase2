@@ -120,9 +120,12 @@ router.get("/albums", authorize, Auth.checkAuth, async function (req, res) {
 
     try {
 
-        let data = Pagination(await Album.getAllLength(req.user), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
+        let ownerLogin = req.query.owner;
+        let user = await User.getByLogin(ownerLogin);
 
-        let albums = await Album.getAll(req.user, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
+        let data = Pagination(await Album.getAllLength(user), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
+
+        let albums = await Album.getAll(user, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
         data.albums = albums.docs;
 
         res.status(200).json(data);
@@ -197,7 +200,7 @@ router.delete("/albums/:album_name", authorize, Auth.checkAuth, async function (
         if (!album) res.status(404).json({ message: "Album  is not found" });
         else if (album.author != req.user.id && req.user.role !== "admin") res.status(403).json({ message: "Forbiden" });
         else res.status(200).json(await Album.delete(req.params.album_name));
-        
+
     }
     catch (err) {
         res.status(500).json({ message: "Internal server error" });
@@ -208,10 +211,6 @@ router.delete("/albums/:album_name", authorize, Auth.checkAuth, async function (
 router.put("/albums/:album_name", authorize, Auth.checkAuth, async function (req, res) {
 
     if (!req.body.name) { res.status(404).json({ message: "Field \"name\" is not specified" }); return; }
-
-    if (/\s/.test(req.body.name)) {
-        res.status(400).json({ message: "Field \"name\" must not contain spaces!" }); return;
-    }
     try {
         const oldName = req.params.album_name;
         const newName = req.body.name;
@@ -241,20 +240,33 @@ router.put("/albums/:album_name", authorize, Auth.checkAuth, async function (req
 //-----------------------------------------------PICTURES-----------------------------------------------------
 router.get("/photos", authorize, Auth.checkAuth, async function (req, res) {
     try {
+        let owner = await User.getByLogin(req.query.owner);
 
-        if (req.query.filter && req.query.album) {
-            let foundArray = await Picture.getAllFiltered(req.query.album, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
+        if (req.query.filter) {
 
-            if (!foundArray.length) { res.status(404).json({ request: req.query.filter, message: `Nothing found by request : ${req.query.filter}` }); }
+            if (req.query.album) {
+                let foundArray = await Picture.getAllFiltered(req.query.album, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
+
+                if (!foundArray.length) { res.status(404).json({ request: req.query.filter, message: `Nothing found by request : ${req.query.filter}` }); }
+                else {
+
+                    res.status(200).json({ photos: foundArray, request: req.query.filter });
+                }
+            }
             else {
+                let foundArray = await Picture.getAllFiltered(null, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
 
-                res.status(200).json({ photos: foundArray, request: req.query.filter });
+                if (!foundArray.length) { res.status(404).json({ request: req.query.filter, message: `Nothing found by request : ${req.query.filter}` }); }
+                else {
+
+                    res.status(200).json({ photos: foundArray, request: req.query.filter });
+                }
             }
         }
         else {
             let photos = req.query.album
                 ? (await Picture.getAllInAlbum(req.query.album, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs
-                : (await Picture.getAll(req.user, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs;
+                : (await Picture.getAll(owner, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs;
 
             //todo
             // for (let photo of photos) {
@@ -267,7 +279,7 @@ router.get("/photos", authorize, Auth.checkAuth, async function (req, res) {
             res.status(200).json({ photos });
         }
     } catch (err) {
-       
+        console.log(err)
         res.status(500).json({ message: "Internal server error" });
     }
 
@@ -302,6 +314,7 @@ router.get("/photos/:name", authorize, Auth.checkAuth, async function (req, res)
             return;
         }
         if (pic.author.id == req.user.id || req.user.role === "admin") {
+            //todo
             //pic.createdAt = prettydate.format(new Date(pic.createdAt));
             res.status(200).json(pic);
         }

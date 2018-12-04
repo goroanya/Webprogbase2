@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+    {{>head}}
+    <title>Stories</title>
+    <meta name="description" content="Stories">
+
+
+
+</head>
+
+<body class="text-center" style="width: 100%; height:100%; background-color: #333;">
+
+    {{>menu}}
+
+    <input hidden id="owner" value="{{owner}}">
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Are tou sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to delete album and all of its photos.
+                        <br>
+                        <span style="font-weight:bold">This operation is permanent and cannot be undone.</span>
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <form action="/stories" id="deleteForm">
+                        <button type="submit" id="confirmDeleteButton" class="btn btn-dark">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container bg-dark " style="height: 100%">
+        <section class="jumbotron text-center bg-light">
+            <div class="container">
+                <h1 class="jumbotron-heading">{{owner}} stories</h1>
+
+            </div>
+            <div class="container">
+                <form>
+                    <input type="text"  class="form-control" id="mysearch" name="search"
+                        placeholder="Search.." autofocus>
+                </form>
+            </div>
+            <div class="container">
+                <p id="search-result"></p>
+            </div>
+
+        </section>
+        <div id="photos" class="container "></div>
+    </div>
+
+    {{>footer}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+
+    <script src="/javascripts/stories.js"></script>
+
+
+
+
+
+</body>
+
+</html>
