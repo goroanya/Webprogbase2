@@ -43,21 +43,11 @@ passport.use(
             passReqToCallback: true, // allows us to pass back the entire request to the callback
         },
         async function (req, username, password, done) {
-            const confirmPassword = req.body.confirmPassword;
-            if (password !== confirmPassword) {
-                done(
-                    null,
-                    false,
-                    req.flash('signupMessage', 'Password does not match.')
-                );
-                return;
-            }
             try {
                 const addedUser = await User.insert(new User(
                     username,
                     Hash.sha512(password, process.env.SALT).passwordHash,
                     'simple',
-                    req.body.fullname
                 ));
 
                 if (addedUser) done(null, addedUser);

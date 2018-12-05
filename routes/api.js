@@ -18,6 +18,7 @@ require("../modules/passport");
 
 
 function authorize(req, res, next) {
+
     if (req.user) return next();
 
     passport.authenticate('basic', { session: false }, (err, user) => {
@@ -51,6 +52,17 @@ router.get('/me', authorize, function (req, res) {
     res.status(200).json(req.user);
 });
 
+router.get('/isunique/:login', async function (req, res) {
+    try {
+        const user = await User.getByLogin(req.params.login);
+        if (user) res.status(200).json({unique : false});
+        else res.status(200).json({unique : true});
+        
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+    }
+
+});
 router.get("/users", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
         let data = Pagination(await User.getAllLength(), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
@@ -69,7 +81,7 @@ router.get("/users/:login", authorize, Auth.checkAuthApi, async function (req, r
     try {
         const user = await User.getByLogin(req.params.login);
         if (!user) res.status(404).json({ message: "User with this login is not found", login: req.params.login });
-        else res.status(200).json(user);
+        else res.status(200).json({ user });
 
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
@@ -83,7 +95,7 @@ router.delete("/users/:login", authorize, Auth.checkAdminApi, async function (re
     try {
         const user = await User.deleteByLogin(req.params.login);
         if (!user) res.status(404).json({ message: "User with this login is not found", login: req.params.login });
-        else res.status(200).json({ message: `User with login: ${req.params.login} is deleted` });
+        else res.status(200).json({ user });
 
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
@@ -245,7 +257,7 @@ router.get("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
 
         if (req.query.filter) {
 
-            
+
             if (req.query.album) {
                 let foundArray = await Picture.getAllFiltered(req.query.album, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
 

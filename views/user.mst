@@ -55,8 +55,8 @@
           {{/adminRole}}
 
         </h1>
-        <h3 class="my-1">Fullname : {{userProfile.fullname}}</h3>
-        <p class="mx-auto ">Bio <br>{{userProfile.bio}}</p>
+        {{#userProfile.fullname}}<h3 class="my-1">Fullname : {{userProfile.fullname}}</h3>{{/userProfile.fullname}}
+        {{#userProfile.bio}}<p class="mx-auto ">Bio <br>{{userProfile.bio}}</p>{{/userProfile.bio}}
 
       </div>
       <div class="card-footer">
@@ -67,12 +67,14 @@
         </p>
         <hr color="white">
 
+        {{#userProfile.tempPhotos}}
         <h1>Stories</h1>
+        {{/userProfile.tempPhotos}}
+        
         <div class="container">
           <div class="row">
             <div class="row">
-
-              {{#userProfile.tempPhotos}}
+                {{#userProfile.tempPhotos}}
               <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="{{url}}" data-image-id="" data-toggle="modal" data-title="{{short_name}}"
                   data-value="{{description}}" data-image="{{url}}" data-target="#image-gallery">

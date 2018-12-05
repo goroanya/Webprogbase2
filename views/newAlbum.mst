@@ -29,20 +29,20 @@
               <input id="album_name" name="album_name" type="text" placeholder="Short uniqe name for your album" class="form-control input-md"
                 required="" title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 10 characters">
             </div>
-
-
           </div>
+
+          
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <p id ="error" class="mt-3 mb-3 error-message"></p>
+              <p id="error" class="mt-3 mb-3 error-message"></p>
               <hr color='white' />
             </div>
           </div>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <button type="submit"  class="btn btn-outline-light">Submit</button>
+              <button type="submit" class="btn btn-outline-light">Submit</button>
             </div>
           </div>
 
@@ -55,7 +55,7 @@
   </div>
   {{>footer}}
 
-    <script src="/javascripts/albumNew.js"></script>
+  <script src="/javascripts/albumNew.js"></script>
 
 </body>
 
