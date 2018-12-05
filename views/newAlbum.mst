@@ -19,11 +19,12 @@
   <div class="album-photo-form ">
     <div class="container">
 
-      <form id="myForm" action="" method="get">
+      <form id="myForm" action="/new/album" method="post" enctype="multipart/form-data">
         <fieldset>
 
           <legend class="legend">Create new album</legend>
 
+          
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
               <input id="album_name" name="album_name" type="text" placeholder="Short uniqe name for your album" class="form-control input-md"
@@ -31,7 +32,12 @@
             </div>
           </div>
 
-          
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              <label for="albumCoverFile">Cover image for album</label>
+              <input id="albumCoverFile" name="albumCoverFile" class="file-input" type="file" accept="image/*" >
+            </div>
+          </div>
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">

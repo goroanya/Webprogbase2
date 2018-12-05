@@ -118,7 +118,69 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
 
     });
 });
+app.post('/new/album', Auth.checkAuth, async function (req, res) {
+    
+    const albumCoverFile = req.files.albumCoverFile;
+    const album_name = req.body.album_name;
 
+    try {
+        if (albumCoverFile) {
+            Cloudinary.fileUpload(albumCoverFile.data, async (err, url) => {
+                if (err) {
+                    req.flash("error", "Sorry.Error with uploading picture.");
+                    res.redirect("/error");
+                } else {
+
+                    const saved = await Album.insert(new Album(album_name, req.user, [], url));
+                    if (saved) res.redirect(`/albums/${saved.name}`);
+                    else res.redirect('/error?message=500+Internal+server+error');
+                }
+            });
+        }
+        else {
+
+            const saved = await Album.insert(new Album(album_name, req.user, [], null));
+            if (saved) res.redirect(`/albums/${saved.name}`);
+            else res.redirect('/error?message=500+Internal+server+error');
+
+        }
+    } catch (error) {
+        req.flash("error", "500 internal server error");
+        res.redirect('/error');
+    }
+});
+
+app.post('/update/album/:album_name', Auth.checkAuth, async function (req, res) {
+    const albumCoverFile = req.files.albumCoverFile;
+    const oldName = req.params.album_name;
+    const newName = req.body.album_name;
+    try {
+        if (albumCoverFile) {
+
+            Cloudinary.fileUpload(albumCoverFile.data, async (err, url) => {
+                if (err) {
+                    req.flash("error", "Sorry.Error with uploading picture.");
+                    res.redirect("/error");
+
+                } else {
+                    const updated = await Album.update(oldName, newName, url);
+                    if (updated) res.redirect(`/albums/${updated.name}`);
+                    else res.redirect('/error?message=500+Internal+server+error');
+                }
+
+            });
+        }
+        else {
+            const updated = await Album.update(oldName, newName, null);
+            if (updated) res.redirect(`/albums/${updated.name}`);
+            else res.redirect('/error?message=500+Internal+server+error');
+        }
+    } catch (error) {
+        console.log(error);
+        req.flash("error", "500 internal server error");
+        res.redirect('/error');
+    }
+});
 app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
     const avaFile = req.files.avaUrlFile;
 
@@ -135,7 +197,6 @@ app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
                     res.redirect("/error");
 
                 } else {
-
                     const updated = await User.update(req.params.login, {
                         fullname: req.body.fullname,
                         bio: req.body.userBio,
@@ -143,7 +204,6 @@ app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
                     });
                     if (updated) res.redirect('/users/' + updated.login);
                     else res.redirect('/error?message=500+Internal+server+error');
-
                 }
 
             });
@@ -168,11 +228,10 @@ app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
 app.get('/error', function (req, res) {
 
     let message = req.query.message;
-    if (req.query.message && message.includes('+'))
-    {
+    if (req.query.message && message.includes('+')) {
         message = message.replace(/+/g, " ");
     }
-        
+
 
     res.render('index', {
         message: message || req.flash("error"),

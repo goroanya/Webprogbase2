@@ -15,19 +15,36 @@
 
   {{>menu}}
 
-  <input type="hidden" id="oldName"  value="{{album_name}}">
+  <input type="hidden" id="oldName" value="{{album_name}}">
 
 
-  <div class="album-photo-form ">
+  <div class="album-photo-form mb-5">
     <div class="container">
-      <form id="updateForm" action="" method="GET" >
+      <form id="updateForm" action="/update/album/{{album_name}}" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend class="legend">Update album</legend>
 
+          <!-- <input hidden name="album-id" value="{{_id}}"> -->
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <input id="album_name" name="album_name" type="text" value="{{album_name}}" placeholder="Short uniqe name for your album"
-                class="form-control input-md" required=""  title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 3 characters but no more than 15 characters">
+              <input id="album_name" name="album_name" type="text" value="{{album.name}}" placeholder="Short uniqe name for your album"
+                class="form-control input-md" required="" title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 3 characters but no more than 15 characters">
+            </div>
+          </div>
+
+          <div class="form-group row justify-content-center  ">
+              <div class="col-md-4">
+                  <label for="currentCover">Your current cover picture</label>
+                  <img id="currentCover" src ="{{album.coverUrl}}">
+                  {{coverUrl}}
+                  <hr color='white' />
+              </div>
+          </div>
+
+          <div class="form-group row justify-content-center ">
+            <div class="col-md-4">
+              <label for="albumCoverFile">Load new/change cover picture:</label>
+              <input name="albumCoverFile" id="albumCoverFile" class="file-input" type="file" accept="image/*">
             </div>
           </div>
 
@@ -43,7 +60,7 @@
               <button type="submit" hidden></button>
             </div>
           </div>
-          
+
         </fieldset>
       </form>
 
@@ -55,10 +72,10 @@
 
     </div>
   </div>
-  
 
 
-<!-- Modal -->
+
+  <!-- Modal -->
   <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
       <div class="modal-content">

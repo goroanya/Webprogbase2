@@ -67,9 +67,9 @@
         </p>
         <hr color="white">
 
-        {{#userProfile.tempPhotos}}
+        {{#userProfile.tempPhotos.length}}
         <h1>Stories</h1>
-        {{/userProfile.tempPhotos}}
+        {{/userProfile.tempPhotos.length}}
         
         <div class="container">
           <div class="row">

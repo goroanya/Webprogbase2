@@ -53,9 +53,7 @@
                     <div class="form-group row justify-content-center ">
                         <div class="col-md-4">
                             <label for="avaUrlFile">Load new avatar:</label>
-                            <input name="avaUrlFile" id="avaUrlFile" class="file-input" type="file" accept="image/*"
-                                required>
-
+                            <input name="avaUrlFile" id="avaUrlFile" class="file-input" type="file" accept="image/*">
                         </div>
                     </div>
 

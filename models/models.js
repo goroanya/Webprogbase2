@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const mongoosePaginate = require('mongoose-paginate');
- 
+
 
 const PictureSchema = new mongoose.Schema({
     short_name: {
@@ -34,7 +34,7 @@ const PictureSchema = new mongoose.Schema({
         required: true
 
     }
-    
+
     // viewers: [
     //     {
     //
@@ -68,11 +68,11 @@ const AlbumSchema = new mongoose.Schema({
             ref: 'Picture',
         },
     ],
-    coverUrl : {
+    coverUrl: {
         type: String,
         default: "https://increasify.com.au/wp-content/uploads/2016/08/default-image.png"
     }
-});
+}, { timestamps: true });
 
 AlbumSchema.plugin(uniqueValidator);
 AlbumSchema.plugin(mongoosePaginate);

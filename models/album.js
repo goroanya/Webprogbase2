@@ -2,22 +2,21 @@ const models = require("./models");
 const User = require("./user");
 
 class Album {
-    constructor(name, author, photos) {
-        this.name = name;
+    constructor(name, author, photos, coverUrl) {
+        if (name) this.name = name;
         this.author = author.id;
         this.photos = photos;
+        if (coverUrl) this.coverUrl = coverUrl;
     }
 
     static async insert(album) {
         const savedAlbum = await models.Album(album).save();
         await User.addAlbum(album.author, savedAlbum.id);
         return savedAlbum;
-
-
     }
 
     static getAll(user, page, albumPerPage) {
-        return models.Album.paginate({ "author": user.id }, { page, limit: albumPerPage });
+        return models.Album.paginate({ "author": user.id }, { page, limit: albumPerPage , sort: { 'createdAt': -1 } });
     }
     static getAllLength(user) {
         return models.Album.countDocuments({ "author": user.id });
@@ -27,10 +26,11 @@ class Album {
         return models.Album.findOne({ name: albumName });
     }
 
-    static async update(oldName, newName) {
+    static async update(oldName, newName, coverUrl) {
 
         let album = await models.Album.findOne({ name: oldName });
-        album.name = newName;
+        if (newName) album.name = newName;
+        if (coverUrl) album.coverUrl = coverUrl;
         await album.save();
         return album;
 
@@ -51,7 +51,7 @@ class Album {
         await album.save();
 
     }
-   
+
 
     static async deletePhoto(albumId, picId) {
         let album = await models.Album.findById(albumId);

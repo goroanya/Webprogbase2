@@ -105,7 +105,7 @@ router.get('/:album_name/update', Auth.checkAuth, async function (req, res) {
 		res.redirect("/error");
 	}
 	else res.render('updateAlbum', {
-		album_name,
+		album,
 		user: req.user,
 		message: req.flash("updateAlbumError")
 	});

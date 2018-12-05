@@ -55,9 +55,9 @@ router.get('/me', authorize, function (req, res) {
 router.get('/isunique/:login', async function (req, res) {
     try {
         const user = await User.getByLogin(req.params.login);
-        if (user) res.status(200).json({unique : false});
-        else res.status(200).json({unique : true});
-        
+        if (user) res.status(200).json({ unique: false });
+        else res.status(200).json({ unique: true });
+
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });
     }
@@ -227,6 +227,7 @@ router.put("/albums/:album_name", authorize, Auth.checkAuthApi, async function (
     try {
         const oldName = req.params.album_name;
         const newName = req.body.name;
+        const coverUrl = req.body.coverUrl;
 
         const album = await Album.getByName(oldName);
         if (!album) {
@@ -236,7 +237,7 @@ router.put("/albums/:album_name", authorize, Auth.checkAuthApi, async function (
             res.status(404).json({ message: "Forbidden" });
         }
         else {
-            const updated = await Album.update(oldName, newName);
+            const updated = await Album.update(oldName, newName, coverUrl);
             res.status(200).json(updated);
         }
 

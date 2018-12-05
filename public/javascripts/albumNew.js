@@ -15,30 +15,8 @@ $('#album_name').on('input', function () {
     }
 });
 
-$('#myForm').submit( async function (e) {
+$('#myForm').submit(function (e) {
     let error = $('#error').html();
-
-    if (error === "") {
-
-        let result = await fetch(`/api/v1/albums`, {
-            method: "POST",
-            body: JSON.stringify({ name: $('#album_name').val() }),
-            headers: {
-                "Content-Type": "application/json"
-            },
-        });
-        result = await result.json();
-
-        if (result.message) {
-            $('#error').html(result.message);
-           
-        }
-        else {
-            //todo albums/objectId
-            $("#myForm").attr('action', `/albums/${result.name}`);
-            $("#myForm").submit();
-        }
-
-    }
+    if (error === "") $('#myForm').submit();
     else e.preventDefault();
 });
