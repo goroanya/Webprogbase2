@@ -30,17 +30,12 @@ class Picture {
     static async getAllFiltered(albumName, owner, filter, page, picturesPerPage) {
 
         let album = await Album.getByName(albumName);
-        let photos = albumName
-            ? await models.Picture.find({ "album": album.id, author: owner.id }).sort({ 'createdAt': -1 })
-            : await models.Picture.find({ 'active': true, author: owner.id }).sort({ 'createdAt': -1 });
+        
+        let foundArray = albumName
+            ? await models.Picture.find({ "short_name": { $regex: new RegExp(filter), $options: 'i' }, "album": album.id, author: owner.id }).sort({ 'createdAt': -1 })
+            : await models.Picture.find({ "short_name": { $regex: new RegExp(filter), $options: 'i' }, "active": true, author: owner.id }).sort({ 'createdAt': -1 })
 
-        let foundArray = [];
-        for (let photo of photos) {
-            if (photo.short_name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
-                photo.createdAt = pretty(photo.createdAt, {});
-                foundArray.push(photo);
-            }
-        }
+        
         foundArray = paginate(foundArray, page, picturesPerPage);
 
         return foundArray;
@@ -92,8 +87,6 @@ class Picture {
             if (!album) {
                 album = await Album.insert({ name: pic.album_name, author: pic.author, photos: [] });
             }
-            Album.setCover(album.id, pic.url);
-
             pic.album = album.id;
             savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);
@@ -118,7 +111,7 @@ class Picture {
                 await User.deleteTempPhoto(copy.author, copy.id);
 
                 //якщо картинку не зберегли в альбом-видаляємо її з бази даних
-                if(!copy.album) await models.Picture.findOneAndRemove({ short_name: copy.short_name });
+                if (!copy.album) await models.Picture.findOneAndRemove({ short_name: copy.short_name });
             } catch (err) {
                 console.log(err);
             }

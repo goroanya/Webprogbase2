@@ -16,6 +16,8 @@
 
   {{>menu}}
 
+  <input hidden id="owner" value="{{owner}}">
+
   <!-- Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
@@ -49,10 +51,18 @@
         <h1 class="jumbotron-heading" id='album'>{{album}}</h1>
         {{#canModify}}
         <p>
+          {{#adminRole}}
+          <button id="albumDeleteButton" class="btn btn-outline-danger my-2" data-toggle="modal" data-target="#deleteModal">Delete
+            album</button>
+          {{/adminRole}}
+
+          {{^adminRole}}
           <a href="/albums/{{album}}/new" class="btn btn-outline-secondary my-2">Add photo</a>
           <a href="/albums/{{album}}/update" class="btn btn-outline-dark my-2">Update album</a>
           <button id="albumDeleteButton" class="btn btn-outline-danger my-2" data-toggle="modal" data-target="#deleteModal">Delete
             album</button>
+          {{/adminRole}}
+          
         </p>
         {{/canModify}}
       </div>
@@ -62,7 +72,7 @@
             autofocus>
         </form>
       </div>
-      <div class="container" >
+      <div class="container">
         <p id="search-result"></p>
       </div>
 

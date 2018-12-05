@@ -11,11 +11,7 @@ router.get('/', Auth.checkAuth, async function (req, res) {
 		res.render('albums', {
 			user: req.user,
 			owner: req.user.login,
-			canModify: true ,
-			adminRole: req.user
-				? req.user.role === 'admin' ? true : false
-				: false
-
+			canModify: true
 		});
 	} catch (err) {
 		res.status(500);
@@ -29,8 +25,7 @@ router.get('/', Auth.checkAuth, async function (req, res) {
 router.get('/new', Auth.checkAuth, function (req, res) {
 	res.render('newAlbum', {
 		message: req.flash("addAlbumError"),
-		user: req.user,
-		adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false,
+		user: req.user
 	});
 });
 
@@ -39,30 +34,21 @@ router.get('/:album_name', Auth.checkAuth, async function (req, res) {
 	const album_name = req.params.album_name;
 
 	try {
-		const album = await Album.getByName(album_name).populate("author","login");
+		const album = await Album.getByName(album_name).populate("author", "login");
 		if (!album) {
 			req.flash("error", "404\n Album is Not Found");
 			res.redirect("/error");
 			return;
 		}
 
-		if (req.user.login == album.author.login || req.user.role === "admin") {
-
-			res.render('album', {
-				album: album.name,
-				user: req.user,
-				canModify : album.author.login == req.user.login || req.user.role === "admin",
-				adminRole: req.user
-					? req.user.role === 'admin' ? true : false
-					: false,
-			});
-
-		}
-		else {
-			res.status(403);
-			req.flash("error", "403\n Forbidden");
-			res.redirect("/error");
-		}
+		res.render('album', {
+			album: album.name,
+			owner: album.author.login,
+			user: req.user,
+			canModify: album.author.login == req.user.login || req.user.role === "admin",
+			adminRole: req.user.role === 'admin' && req.user.login !== album.author.login ? true : false
+				
+		});
 
 	} catch (err) {
 		res.status(500);
@@ -88,10 +74,7 @@ router.get('/:album_name/new', Auth.checkAuth, async function (req, res) {
 			if (album.author == req.user.id)
 				res.render('newPicture', {
 					album_name: album.name,
-					user: req.user,
-					adminRole: req.user
-						? req.user.role === 'admin' ? true : false
-						: false,
+					user: req.user
 				});
 
 			else {
@@ -124,8 +107,7 @@ router.get('/:album_name/update', Auth.checkAuth, async function (req, res) {
 	else res.render('updateAlbum', {
 		album_name,
 		user: req.user,
-		message: req.flash("updateAlbumError"),
-		adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false,
+		message: req.flash("updateAlbumError")
 	});
 });
 

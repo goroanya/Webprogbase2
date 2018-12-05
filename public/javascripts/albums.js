@@ -5,6 +5,7 @@ async function renderAlbums() {
         let itemsData = await fetch(`/api/v1/albums?page=${localStorage.page}&owner=${owner}`);
         itemsData = await itemsData.json();
 
+        if(itemsData.albums && itemsData.albums.length === 0) itemsData.empty = true;
         let templateStr = await fetch("/templates/albums.mst");
         templateStr = await templateStr.text();
 

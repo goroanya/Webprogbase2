@@ -168,8 +168,11 @@ app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
 app.get('/error', function (req, res) {
 
     let message = req.query.message;
-    if (req.query.message)
+    if (req.query.message && message.includes('+'))
+    {
         message = message.replace(/+/g, " ");
+    }
+        
 
     res.render('index', {
         message: message || req.flash("error"),

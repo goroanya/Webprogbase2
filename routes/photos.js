@@ -20,9 +20,8 @@ router.get('/page/:short_name', Auth.checkAuth, async function (req, res) {
 			picture: pic,
 			user: req.user,
 			canModify: pic.author.login == req.user.login || req.user.role === "admin",
-			adminRole: req.user
-				? req.user.role === 'admin' ? true : false
-				: false,
+			adminRole: req.user.role === 'admin' && req.user.login !== pic.author.login ? true : false
+
 		});
 	} catch (err) {
 		res.status(500);
@@ -44,10 +43,7 @@ router.get('/:short_name/update', Auth.checkAuth, async function (req, res) {
 
 			res.render('updatePicture', {
 				pic,
-				user: req.user,
-				adminRole: req.user
-					? req.user.role === 'admin' ? true : false
-					: false,
+				user: req.user
 			});
 		}
 	} catch (err) {
@@ -58,9 +54,6 @@ router.get('/:short_name/update', Auth.checkAuth, async function (req, res) {
 
 router.get("/new", Auth.checkAuth, (req, res) => {
 	res.render('newPicture', {
-		user: req.user,
-		adminRole: req.user
-			? req.user.role === 'admin' ? true : false
-			: false,
+		user: req.user
 	});
 });

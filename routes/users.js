@@ -39,35 +39,24 @@ router.get('/:login', Auth.checkAuth, async function (req, res) {
 
 router.get('/:login/albums', Auth.checkAuth, async function (req, res) {
   const login = req.params.login;
-  try {
 
-    const user = await User.getByLogin(login).populate('tempPhotos');
-    if (!user) {
-      req.flash("error", "404\n User id not found");
-      return;
-    }
-    res.render('albums', {
-      user,
-      canModify: login == req.user.login,
-      adminRole: req.user
-        ? req.user.role === 'admin' ? true : false
-        : false
-
-    });
-
-  }
-  catch (err) {
-    req.flash("error", "500\n Internal Server Error");
-    res.redirect("/error");
-  }
-});
-router.get('/:login/stories', Auth.checkAuth, function (req, res) {
-  
-  res.render('stories', {
-    
-    owner: req.params.login,
+  res.render('albums', {
     user: req.user,
-    adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false,
+    owner: req.params.login,
+    canModify: login == req.user.login,
+    adminRole: req.user
+      ? req.user.role === 'admin' ? true : false
+      : false
+
+  });
+});
+
+
+router.get('/:login/stories', Auth.checkAuth, function (req, res) {
+
+  res.render('stories', {
+    owner: req.params.login,
+    user: req.user
   });
 });
 
@@ -89,8 +78,7 @@ router.get("/:login/update", Auth.checkAuth, async function (req, res) {
     }
     res.render('updateUser', {
       userProfile: user,
-      user: req.user,
-      adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false
+      user: req.user
     });
 
   }

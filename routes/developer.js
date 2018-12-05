@@ -6,8 +6,7 @@ const router = express.Router();
 
 router.get("/", function (req, res) {
   res.render('developer', {
-    user: req.user,
-    adminRole: req.user ? (req.user.role === 'admin' ? true : false) : false,
+    user: req.user
   });
 });
 module.exports = router;

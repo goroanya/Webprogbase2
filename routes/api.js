@@ -51,7 +51,7 @@ router.get('/me', authorize, function (req, res) {
     res.status(200).json(req.user);
 });
 
-router.get("/users", authorize, Auth.checkAuth, async function (req, res) {
+router.get("/users", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
         let data = Pagination(await User.getAllLength(), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
 
@@ -64,7 +64,7 @@ router.get("/users", authorize, Auth.checkAuth, async function (req, res) {
     }
 });
 
-router.get("/users/:login", authorize, Auth.checkAuth, async function (req, res) {
+router.get("/users/:login", authorize, Auth.checkAuthApi, async function (req, res) {
 
     try {
         const user = await User.getByLogin(req.params.login);
@@ -78,7 +78,7 @@ router.get("/users/:login", authorize, Auth.checkAuth, async function (req, res)
 
 });
 
-router.delete("/users/:login", authorize, Auth.checkAdmin, async function (req, res) {
+router.delete("/users/:login", authorize, Auth.checkAdminApi, async function (req, res) {
 
     try {
         const user = await User.deleteByLogin(req.params.login);
@@ -91,7 +91,7 @@ router.delete("/users/:login", authorize, Auth.checkAdmin, async function (req, 
 
 });
 
-router.put("/users/:login", authorize, Auth.checkAuth, async function (req, res) {
+router.put("/users/:login", authorize, Auth.checkAuthApi, async function (req, res) {
 
     if (!req.body.fullname && !req.body.role && !req.body.avaUrl && !req.body.password) {
         res.status(400).json({ message: " No one field is  specified" });
@@ -116,7 +116,7 @@ router.put("/users/:login", authorize, Auth.checkAuth, async function (req, res)
 
 //-----------------------------------------------ALBUMS-----------------------------------------------------
 
-router.get("/albums", authorize, Auth.checkAuth, async function (req, res) {
+router.get("/albums", authorize, Auth.checkAuthApi, async function (req, res) {
 
     try {
 
@@ -131,6 +131,7 @@ router.get("/albums", authorize, Auth.checkAuth, async function (req, res) {
         res.status(200).json(data);
 
     } catch (err) {
+        console.log(err.message)
         res.status(500).json({ message: "Internal server error" });
     }
 
@@ -138,7 +139,7 @@ router.get("/albums", authorize, Auth.checkAuth, async function (req, res) {
 });
 
 
-router.post("/albums", authorize, Auth.checkAuth, async function (req, res) {
+router.post("/albums", authorize, Auth.checkAuthApi, async function (req, res) {
 
     const name = req.body.name;
 
@@ -156,7 +157,7 @@ router.post("/albums", authorize, Auth.checkAuth, async function (req, res) {
     }
 });
 
-router.get("/albums/:album_name", authorize, Auth.checkAuth, async function (req, res) {
+router.get("/albums/:album_name", authorize, Auth.checkAuthApi, async function (req, res) {
 
     try {
 
@@ -193,7 +194,7 @@ router.get("/albums/:album_name", authorize, Auth.checkAuth, async function (req
     }
 });
 
-router.delete("/albums/:album_name", authorize, Auth.checkAuth, async function (req, res) {
+router.delete("/albums/:album_name", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
         const album = await Album.getByName(req.params.album_name);
 
@@ -208,7 +209,7 @@ router.delete("/albums/:album_name", authorize, Auth.checkAuth, async function (
 });
 
 
-router.put("/albums/:album_name", authorize, Auth.checkAuth, async function (req, res) {
+router.put("/albums/:album_name", authorize, Auth.checkAuthApi, async function (req, res) {
 
     if (!req.body.name) { res.status(404).json({ message: "Field \"name\" is not specified" }); return; }
     try {
@@ -238,12 +239,13 @@ router.put("/albums/:album_name", authorize, Auth.checkAuth, async function (req
 
 
 //-----------------------------------------------PICTURES-----------------------------------------------------
-router.get("/photos", authorize, Auth.checkAuth, async function (req, res) {
+router.get("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
         let owner = await User.getByLogin(req.query.owner);
 
         if (req.query.filter) {
 
+            
             if (req.query.album) {
                 let foundArray = await Picture.getAllFiltered(req.query.album, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
 
@@ -284,7 +286,7 @@ router.get("/photos", authorize, Auth.checkAuth, async function (req, res) {
     }
 
 });
-router.post("/photos", authorize, Auth.checkAuth, async function (req, res) {
+router.post("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
 
         const url = req.body.url;
@@ -304,7 +306,7 @@ router.post("/photos", authorize, Auth.checkAuth, async function (req, res) {
         res.status(400).json({ message: err });
     }
 });
-router.get("/photos/:name", authorize, Auth.checkAuth, async function (req, res) {
+router.get("/photos/:name", authorize, Auth.checkAuthApi, async function (req, res) {
     const name = req.params.name;
     try {
         const pic = await Picture.getByShortName(name).populate('author', "login").populate("author", 'login').populate("album", "name");
@@ -328,7 +330,7 @@ router.get("/photos/:name", authorize, Auth.checkAuth, async function (req, res)
 
     }
 });
-router.delete("/photos/:name", authorize, Auth.checkAuth, async function (req, res) {
+router.delete("/photos/:name", authorize, Auth.checkAuthApi, async function (req, res) {
     const name = req.params.name;
     try {
         const pic = await Picture.getByShortName(name).populate('author', "login").populate("author", 'login').populate("album", "name");
@@ -352,7 +354,7 @@ router.delete("/photos/:name", authorize, Auth.checkAuth, async function (req, r
         res.status(500).json({ message: "Internal server error" });
     }
 });
-router.put("/photos/:name", authorize, Auth.checkAuth, async function (req, res) {
+router.put("/photos/:name", authorize, Auth.checkAuthApi, async function (req, res) {
 
     if (!req.body.name || !req.body.description) { res.status(400).send({ message: "No specified field" }); return; }
 

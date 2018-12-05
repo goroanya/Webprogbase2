@@ -1,7 +1,6 @@
 let picturesPerPage = 4;
 let owner = $('#owner').val();
 
-console.log(owner);
 async function renderPhotos() {
     try {
 

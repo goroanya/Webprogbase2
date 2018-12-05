@@ -1,4 +1,5 @@
 let picturePerPage = 6;
+let owner = $('#owner').val();
 
 async function renderPhotos() {
     try {
@@ -7,8 +8,8 @@ async function renderPhotos() {
 
 
         let itemsData = localStorage.filter
-            ? await fetch(`/api/v1/photos?album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}`)
-            : await fetch(`/api/v1/photos?album=${album}&offset=${picturePerPage}`);
+            ? await fetch(`/api/v1/photos?album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}&owner=${owner}`)
+            : await fetch(`/api/v1/photos?album=${album}&offset=${picturePerPage}&owner=${owner}`);
 
 
         itemsData = await itemsData.json();
@@ -67,8 +68,8 @@ $(window).scroll(async function () {
         let album = $('#album').text();
 
         let itemsData = localStorage.filter
-            ? await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}`)
-            : await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&offset=${picturePerPage}`);
+            ? await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}&owner=${owner}`)
+            : await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&offset=${picturePerPage}&owner=${owner}`);
 
         itemsData = await itemsData.json();
 
