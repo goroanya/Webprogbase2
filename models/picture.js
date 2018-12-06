@@ -1,7 +1,6 @@
 const models = require("./models");
 const Album = require("./album");
 const User = require("./user");
-let pretty = require('pretty-date-js');
 
 function paginate(entities, page, entitiesPerPage) {
     const firstEntityIndex = (page - 1) * entitiesPerPage;
@@ -12,28 +11,28 @@ function paginate(entities, page, entitiesPerPage) {
 }
 
 class Picture {
-    constructor(active, short_name, album_name, description, url, author, createdAt) {
+    constructor(active, short_name, albumId, description, url, author, time) {
         this.active = active;
         this.short_name = short_name;
-        this.album_name = album_name;
+        this.album = albumId;
         this.description = description;
         this.url = url;
         this.author = author.id;
-        this.createdAt = createdAt;
+        this.time = time;
     }
 
 
-    static getByShortName(short_name) {
-        return models.Picture.findOne({ short_name: short_name });
+    static getById(id){
+        return models.Picture.findById(id);
     }
 
-    static async getAllFiltered(albumName, owner, filter, page, picturesPerPage) {
 
-        let album = await Album.getByName(albumName);
+    static async getAllFiltered(albumId, owner, filter, page, picturesPerPage) {
+
         
-        let foundArray = albumName
-            ? await models.Picture.find({ "short_name": { $regex: new RegExp(filter), $options: 'i' }, "album": album.id, author: owner.id }).sort({ 'createdAt': -1 })
-            : await models.Picture.find({ "short_name": { $regex: new RegExp(filter), $options: 'i' }, "active": true, author: owner.id }).sort({ 'createdAt': -1 })
+        let foundArray = albumId
+            ? await models.Picture.find({ "short_name": { $regex: new RegExp(filter), $options: 'i' }, "album": albumId, author: owner.id }).sort({ createdAt: -1 })
+            : await models.Picture.find({ "short_name": { $regex: new RegExp(filter), $options: 'i' }, "active": true, author: owner.id }).sort({ createdAt: -1 });
 
         
         foundArray = paginate(foundArray, page, picturesPerPage);
@@ -45,9 +44,8 @@ class Picture {
         return models.Picture.paginate({ "author": owner.id, 'active': true }, { page, limit: picturesPerPage, sort: { 'createdAt': -1 } });
     }
 
-    static async getAllInAlbum(albumName, page, picturesPerPage) {
-        let album = await Album.getByName(albumName);
-        return models.Picture.paginate({ "album": album.id }, { page, limit: picturesPerPage, sort: { 'createdAt': -1 } });
+    static async getAllInAlbum(albumId, page, picturesPerPage) {
+        return models.Picture.paginate({ "album": albumId }, { page, limit: picturesPerPage, sort: { 'createdAt': -1 } });
     }
 
     static getAllLength(user) {
@@ -55,39 +53,36 @@ class Picture {
     }
 
 
-    static async delete(short_name) {
-        const pic = await models.Picture.findOneAndRemove({ short_name: short_name }).populate("album", "name");
+    static async delete(id) {
+        const pic = await models.Picture.findByIdAndRemove(id).populate("album", "name").populate('author','login');
 
         if (pic.active && pic.album) {
 
-            await Album.deletePhoto(pic.album, pic.id);
-            await User.deleteTempPhoto(pic.author, pic.id);
+            await Album.deletePhoto(pic.album.id, id);
+            await User.deleteTempPhoto(pic.author, id);
 
         } else if (!pic.active && pic.album) {
 
-            await Album.deletePhoto(pic.album, pic.id);
+            await Album.deletePhoto(pic.album.id, id);
         }
         else if (pic.active && !pic.album) {
 
-            await User.deleteTempPhoto(pic.author, pic.id);
+            await User.deleteTempPhoto(pic.author, id);
         }
         return pic;
     }
 
     static async  insert(pic) {
         let savedPic;
-        if (pic.album_name) {
-            // якщо нам передали ім"я альбому, то картинка вже НЕ ТІЛЬКИ ТИМЧАСОВА і буде зберігатись в альбомі
+        if (pic.albumId) {
+            
+            // якщо нам передали id альбому, то картинка вже НЕ ТІЛЬКИ ТИМЧАСОВА і буде зберігатись в альбомі
+            let album = await Album.getById(pic.albumId);
 
-            let album = await Album.getByName(pic.album_name);
             //якщо адмін хоче додати фото не в свій альбом
             if (album && album.author != pic.author) return 403;
 
-            //створюємо новий альбом
-            if (!album) {
-                album = await Album.insert({ name: pic.album_name, author: pic.author, photos: [] });
-            }
-            pic.album = album.id;
+            pic.album = album._id;
             savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);
             await Album.addPhoto(pic.album, savedPic.id);
@@ -111,7 +106,7 @@ class Picture {
                 await User.deleteTempPhoto(copy.author, copy.id);
 
                 //якщо картинку не зберегли в альбом-видаляємо її з бази даних
-                if (!copy.album) await models.Picture.findOneAndRemove({ short_name: copy.short_name });
+                if (!copy.album) await models.Picture.findByIdAndDelete(copy.id);
             } catch (err) {
                 console.log(err);
             }

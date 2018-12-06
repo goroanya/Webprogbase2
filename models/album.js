@@ -16,29 +16,29 @@ class Album {
     }
 
     static getAll(user, page, albumPerPage) {
-        return models.Album.paginate({ "author": user.id }, { page, limit: albumPerPage , sort: { 'createdAt': -1 } });
+        return models.Album.paginate({ "author": user.id }, { page, limit: albumPerPage , sort: { createdAt: -1 } });
     }
     static getAllLength(user) {
         return models.Album.countDocuments({ "author": user.id });
     }
 
-    static getByName(albumName) {
-        return models.Album.findOne({ name: albumName });
+    static getById(id) {
+        return models.Album.findById(id);
     }
 
-    static async update(oldName, newName, coverUrl) {
+    static async update(id, toUpd) {
 
-        let album = await models.Album.findOne({ name: oldName });
-        if (newName) album.name = newName;
-        if (coverUrl) album.coverUrl = coverUrl;
+        let album = await models.Album.findById(id);
+        if (toUpd.name) album.name = toUpd.name;
+        if (toUpd.coverUrl) album.coverUrl = toUpd.coverUrl;
         await album.save();
         return album;
 
     }
 
-    static async delete(name) {
+    static async delete(id) {
 
-        const album = await models.Album.findOneAndDelete({ name });
+        const album = await models.Album.findByIdAndRemove(id);
         await User.deleteAlbum(album.author, album.id);
         await models.Picture.deleteMany({ album: album.id });
         return album;

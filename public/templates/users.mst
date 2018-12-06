@@ -12,7 +12,7 @@
         {{#users}}
         <tr>
             <td>
-                <img class="rounded img-responsive float-left" src={{avaUrl}} alt="avatar" width="15%" height="25%">
+                <img class="rounded img-responsive float-left" src={{avaUrl}} alt="avatar" width="200" height="200">
                 <p>Login:
                     <a href="/users/{{login}}">{{login}}</a>
                 </p>

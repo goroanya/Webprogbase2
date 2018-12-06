@@ -4,17 +4,17 @@ let owner = $('#owner').val();
 async function renderPhotos() {
     try {
 
-        let album = $('#album').text();
+        let albumId = $('#albumId').val();
 
 
         let itemsData = localStorage.filter
-            ? await fetch(`/api/v1/photos?album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}&owner=${owner}`)
-            : await fetch(`/api/v1/photos?album=${album}&offset=${picturePerPage}&owner=${owner}`);
+            ? await fetch(`/api/v1/photos?albumId=${albumId}&offset=${picturePerPage}&owner=${owner}&filter=${localStorage.filter}`)
+            : await fetch(`/api/v1/photos?albumId=${albumId}&offset=${picturePerPage}&owner=${owner}`);
 
 
         itemsData = await itemsData.json();
 
-        itemsData.album = album;
+        // itemsData.album = album;
 
         //перевірка чи альбом пустий
         if (itemsData.photos && itemsData.photos.length == 0) itemsData.empty = true;
@@ -45,12 +45,12 @@ async function renderPhotos() {
     }
 }
 
-async function searchByName() {
-
+$('#search').keyup(async function () {
     localStorage.filter = $("#search").val();
     localStorage.page = 1;
     await renderPhotos();
-}
+});
+
 
 
 window.onload = async function () {
@@ -65,11 +65,11 @@ $(window).scroll(async function () {
 
         localStorage.page++;
 
-        let album = $('#album').text();
+        let albumId = $('#albumId').val();
 
         let itemsData = localStorage.filter
-            ? await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&filter=${localStorage.filter}&offset=${picturePerPage}&owner=${owner}`)
-            : await fetch(`/api/v1/photos/?page=${localStorage.page}&album=${album}&offset=${picturePerPage}&owner=${owner}`);
+            ? await fetch(`/api/v1/photos/?page=${localStorage.page}&albumId=${albumId}&offset=${picturePerPage}&owner=${owner}&filter=${localStorage.filter}`)
+            : await fetch(`/api/v1/photos/?page=${localStorage.page}&albumId=${albumId}&offset=${picturePerPage}&owner=${owner}`);
 
         itemsData = await itemsData.json();
 
@@ -82,7 +82,5 @@ $(window).scroll(async function () {
             if (localStorage.filter) $("#galleryFiltered").append(htmlStr);
             else $("#gallery").append(htmlStr);
         }
-
-
     }
 });

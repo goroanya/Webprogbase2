@@ -70,14 +70,14 @@
         {{#userProfile.tempPhotos.length}}
         <h1>Stories</h1>
         {{/userProfile.tempPhotos.length}}
-        
+
         <div class="container">
           <div class="row">
             <div class="row">
-                {{#userProfile.tempPhotos}}
+              {{#userProfile.tempPhotos}}
               <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="{{url}}" data-image-id="" data-toggle="modal" data-title="{{short_name}}"
-                  data-value="{{description}}" data-image="{{url}}" data-target="#image-gallery">
+                  data-date="{{time}}" data-value="{{description}}" data-image="{{url}}" data-target="#image-gallery">
                   <img class="img-thumbnail" src="{{url}}" alt="{{short_name}}">
                 </a>
               </div>
@@ -94,8 +94,10 @@
                     <button type="button" class="close text-light" data-dismiss="modal"><span aria-hidden="true">×</span><span
                         class="sr-only">Close</span>
                     </button>
+
                   </div>
                   <div class="modal-body">
+                    <p id="image-gallery-date" class="text-right"></p>
                     <img id="image-gallery-image" class="img-responsive col-md-12" src="">
                     <p id="image-gallery-body"></p>
                   </div>

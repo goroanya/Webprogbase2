@@ -21,20 +21,20 @@
       <form id="myForm" action="/new/picture" method="POST" enctype="multipart/form-data">
         <fieldset>
 
-          {{#album_name}}
-          <legend class="legend">Add picture to "{{album_name}}"</legend>
-          <input type="hidden" name="album_name" value="{{album_name}}">
+          {{#album}}
+          <legend class="legend">Add picture to {{album.name}}</legend>
+          <input type="hidden" name="albumId" value="{{album._id}}">
 
-          {{/album_name}}
+          {{/album}}
 
-          {{^album_name}}
+          {{^album}}
           <legend class="legend">Add new temporary picture </legend>
-          {{/album_name}}
+          {{/album}}
 
 
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <input id="short_name" name="short_name" type="text" placeholder="Short uniqe name for your photo" class="form-control input-md"
+              <input id="short_name" name="short_name" type="text" placeholder="Short  name for your photo" class="form-control input-md"
                 required="" title=" name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 3 characters but no more than 15 characters">
 
             </div>

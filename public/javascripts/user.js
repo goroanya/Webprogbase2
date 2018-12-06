@@ -79,6 +79,8 @@ $(document)
                     .attr('src', $sel.data('image'));
                 $('#image-gallery-body')
                     .text($sel.data('value'));
+                $('#image-gallery-date')
+                    .text($sel.data('date'));
                 disableButtons(counter, $sel.data('image-id'));
             }
 

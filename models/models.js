@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-
 const mongoosePaginate = require('mongoose-paginate');
 
 
@@ -8,13 +6,13 @@ const PictureSchema = new mongoose.Schema({
     short_name: {
         type: String,
         required: true,
-        unique: true,
     },
     active: {
         type: Boolean,
     },
-    createdAt: {
-        type: Date
+    time: {
+        type: String,
+        required: true
     },
     album: {
         type: mongoose.Schema.Types.ObjectId,
@@ -43,8 +41,7 @@ const PictureSchema = new mongoose.Schema({
     //
     //     }. 
     // ],
-});
-PictureSchema.plugin(uniqueValidator);
+}, { timestamps: true });
 PictureSchema.plugin(mongoosePaginate);
 
 const pictureModel = mongoose.model('Picture', PictureSchema);
@@ -54,8 +51,7 @@ const pictureModel = mongoose.model('Picture', PictureSchema);
 const AlbumSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
@@ -74,7 +70,6 @@ const AlbumSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-AlbumSchema.plugin(uniqueValidator);
 AlbumSchema.plugin(mongoosePaginate);
 
 const albumModel = mongoose.model('Album', AlbumSchema);
@@ -109,8 +104,7 @@ const UserSchema = new mongoose.Schema({
             ref: 'Album',
         },
     ],
-});
-UserSchema.plugin(uniqueValidator);
+}, { timestamps: true });
 UserSchema.plugin(mongoosePaginate);
 
 const userModel = mongoose.model('User', UserSchema);

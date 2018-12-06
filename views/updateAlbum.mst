@@ -15,25 +15,21 @@
 
   {{>menu}}
 
-  <input type="hidden" id="oldName" value="{{album_name}}">
-
-
   <div class="album-photo-form mb-5">
     <div class="container">
-      <form id="updateForm" action="/update/album/{{album_name}}" method="post" enctype="multipart/form-data">
+      <form id="updateForm" action="/update/albums/{{album._id}}" method="post" enctype="multipart/form-data">
         <fieldset>
           <legend class="legend">Update album</legend>
 
-          <!-- <input hidden name="album-id" value="{{_id}}"> -->
           <div class="form-group row justify-content-center">
-            <div class="col-md-4">
-              <input id="album_name" name="album_name" type="text" value="{{album.name}}" placeholder="Short uniqe name for your album"
+            <div class="col-md-8">
+              <input id="album_name" name="name" type="text" value="{{album.name}}" placeholder="Short uniqe name for your album"
                 class="form-control input-md" required="" title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 3 characters but no more than 15 characters">
             </div>
           </div>
 
           <div class="form-group row justify-content-center  ">
-              <div class="col-md-4">
+              <div class="col-md-8">
                   <label for="currentCover">Your current cover picture</label>
                   <img id="currentCover" src ="{{album.coverUrl}}">
                   {{coverUrl}}
@@ -42,21 +38,21 @@
           </div>
 
           <div class="form-group row justify-content-center ">
-            <div class="col-md-4">
+            <div class="col-md-8">
               <label for="albumCoverFile">Load new/change cover picture:</label>
               <input name="albumCoverFile" id="albumCoverFile" class="file-input" type="file" accept="image/*">
             </div>
           </div>
 
           <div class="form-group row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-8">
               <p id="error" class="mt-3 mb-3 error-message"></p>
               <hr color='white' />
             </div>
           </div>
 
           <div class="form-group row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-8">
               <button type="submit" hidden></button>
             </div>
           </div>
@@ -65,7 +61,7 @@
       </form>
 
       <div class="form-group row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-8">
           <button id="albumUpdateButton" type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#updateModal">Update</button>
         </div>
       </div>

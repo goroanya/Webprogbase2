@@ -8,7 +8,6 @@ class User {
         this.password = password;
         this.fullname = fullname;
         this.role = role;
-        this.createdAt = new Date();
     }
 
     static async getAll(page, usersPerPage) {

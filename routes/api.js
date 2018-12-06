@@ -11,6 +11,8 @@ const User = require('../models/user');
 const Album = require('../models/album');
 const Picture = require('../models/picture');
 const Pagination = require("../config/pagination");
+const FormatDate = require("../config/formatDate");
+
 
 
 require('dotenv').config();
@@ -65,7 +67,7 @@ router.get('/isunique/:login', async function (req, res) {
 });
 router.get("/users", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
-        let data = Pagination(await User.getAllLength(), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
+        let data = Pagination(await User.getAllLength(), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 5);
 
         let users = await User.getAll(parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
         data.users = users.docs;
@@ -105,7 +107,7 @@ router.delete("/users/:login", authorize, Auth.checkAdminApi, async function (re
 
 router.put("/users/:login", authorize, Auth.checkAuthApi, async function (req, res) {
 
-    if (!req.body.fullname && !req.body.role && !req.body.avaUrl && !req.body.password) {
+    if (!req.body.fullname && !req.body.role && !req.body.avaUrl && !req.body.password && !req.body.bio) {
         res.status(400).json({ message: " No one field is  specified" });
         return;
     }
@@ -113,6 +115,7 @@ router.put("/users/:login", authorize, Auth.checkAuthApi, async function (req, r
         const updated = await User.update(req.params.login, {
             fullname: req.body.fullname,
             role: req.body.role,
+            bio: req.body.bio,
             avaUrl: req.body.avaUrl,
             password: req.body.password ? Hash.sha512(req.body.password, process.env.SALT).passwordHash : null
         });
@@ -135,15 +138,14 @@ router.get("/albums", authorize, Auth.checkAuthApi, async function (req, res) {
         let ownerLogin = req.query.owner;
         let user = await User.getByLogin(ownerLogin);
 
-        let data = Pagination(await Album.getAllLength(user), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
+        let data = Pagination(await Album.getAllLength(user), parseInt(req.query.page) || 1, parseInt(req.query.offset) || 10);
 
-        let albums = await Album.getAll(user, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3);
+        let albums = await Album.getAll(user, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 10);
         data.albums = albums.docs;
 
         res.status(200).json(data);
 
     } catch (err) {
-        console.log(err.message)
         res.status(500).json({ message: "Internal server error" });
     }
 
@@ -154,10 +156,12 @@ router.get("/albums", authorize, Auth.checkAuthApi, async function (req, res) {
 router.post("/albums", authorize, Auth.checkAuthApi, async function (req, res) {
 
     const name = req.body.name;
+    const url = req.body.url;
 
-    if (!name) { res.status(400).json({ message: "Field \"name\" is not specified" }); return; }
 
-    const album = new Album(name, req.user, []);
+    if (!name) { res.status(400).json({ message: "Field -name- is not specified" }); return; }
+
+    const album = new Album(name, req.user, [], url);
 
     try {
 
@@ -169,11 +173,11 @@ router.post("/albums", authorize, Auth.checkAuthApi, async function (req, res) {
     }
 });
 
-router.get("/albums/:album_name", authorize, Auth.checkAuthApi, async function (req, res) {
+router.get("/albums/:id", authorize, Auth.checkAuthApi, async function (req, res) {
 
     try {
 
-        let album = await Album.getByName(req.params.album_name).populate("photos");
+        let album = await Album.getById(req.params.id).populate("photos");
 
         if (!album) { res.status(404).json({ message: " 404 \n Album  is not found" }); return; }
 
@@ -206,38 +210,38 @@ router.get("/albums/:album_name", authorize, Auth.checkAuthApi, async function (
     }
 });
 
-router.delete("/albums/:album_name", authorize, Auth.checkAuthApi, async function (req, res) {
+router.delete("/albums/:id", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
-        const album = await Album.getByName(req.params.album_name);
-
+        const album = await Album.getById(req.params.id);
         if (!album) res.status(404).json({ message: "Album  is not found" });
         else if (album.author != req.user.id && req.user.role !== "admin") res.status(403).json({ message: "Forbiden" });
-        else res.status(200).json(await Album.delete(req.params.album_name));
-
-    }
-    catch (err) {
+        else {
+            const deleted = await Album.delete(req.params.id);
+            res.status(200).json(deleted);
+        }
+    } catch (err) {
         res.status(500).json({ message: "Internal server error" });
     }
 });
 
 
-router.put("/albums/:album_name", authorize, Auth.checkAuthApi, async function (req, res) {
+router.put("/albums/:id", authorize, Auth.checkAuthApi, async function (req, res) {
 
     if (!req.body.name) { res.status(404).json({ message: "Field \"name\" is not specified" }); return; }
     try {
-        const oldName = req.params.album_name;
-        const newName = req.body.name;
+        const id = req.params.id;
+        const name = req.body.name;
         const coverUrl = req.body.coverUrl;
 
-        const album = await Album.getByName(oldName);
+        const album = await Album.getById(id);
         if (!album) {
-            res.status(404).json({ message: "Album with this name is not found", name: oldName });
+            res.status(404).json({ message: `Album with this id ${id}  is not found` });
         }
         else if (album.author != req.user.id) {
             res.status(404).json({ message: "Forbidden" });
         }
         else {
-            const updated = await Album.update(oldName, newName, coverUrl);
+            const updated = await Album.update(id, { name, coverUrl });
             res.status(200).json(updated);
         }
 
@@ -251,7 +255,7 @@ router.put("/albums/:album_name", authorize, Auth.checkAuthApi, async function (
 
 
 
-//-----------------------------------------------PICTURES-----------------------------------------------------
+//-----------------------------------------------PHOTOS-----------------------------------------------------
 router.get("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
     try {
         let owner = await User.getByLogin(req.query.owner);
@@ -259,8 +263,8 @@ router.get("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
         if (req.query.filter) {
 
 
-            if (req.query.album) {
-                let foundArray = await Picture.getAllFiltered(req.query.album, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
+            if (req.query.albumId) {
+                let foundArray = await Picture.getAllFiltered(req.query.albumId, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 10));
 
                 if (!foundArray.length) { res.status(404).json({ request: req.query.filter, message: `Nothing found by request : ${req.query.filter}` }); }
                 else {
@@ -269,7 +273,7 @@ router.get("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
                 }
             }
             else {
-                let foundArray = await Picture.getAllFiltered(null, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 3));
+                let foundArray = await Picture.getAllFiltered(null, owner, req.query.filter, parseInt(req.query.page) || 1, parseInt(req.query.offset || 10));
 
                 if (!foundArray.length) { res.status(404).json({ request: req.query.filter, message: `Nothing found by request : ${req.query.filter}` }); }
                 else {
@@ -279,22 +283,13 @@ router.get("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
             }
         }
         else {
-            let photos = req.query.album
-                ? (await Picture.getAllInAlbum(req.query.album, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs
-                : (await Picture.getAll(owner, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 3)).docs;
-
-            //todo
-            // for (let photo of photos) {
-            //     photo.prettydate = prettydate.format(new Date(photo.createdAt));
-            // }
-
-
-
+            let photos = req.query.albumId
+                ? (await Picture.getAllInAlbum(req.query.albumId, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 10)).docs
+                : (await Picture.getAll(owner, parseInt(req.query.page) || 1, parseInt(req.query.offset) || 10)).docs;
 
             res.status(200).json({ photos });
         }
     } catch (err) {
-        console.log(err)
         res.status(500).json({ message: "Internal server error" });
     }
 
@@ -310,7 +305,8 @@ router.post("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
         if (!short_name) { res.status(400).json({ message: `Field (name) is not specified` }); return; }
         else if (!url) { res.status(400).json({ message: `Field (url) is not specified` }); return; }
 
-        const saved = await Picture.insert(new Picture(true, short_name, album_name, description, url, req.user, Date.now()));
+        const saved = await Picture.insert(new Picture(true, short_name, album_name, description, url, req.user, FormatDate(new Date())));
+
 
         if (saved === 403) { res.status(403).json({ message: "Forbidden" }); }
         else res.status(201).json(saved);
@@ -319,18 +315,17 @@ router.post("/photos", authorize, Auth.checkAuthApi, async function (req, res) {
         res.status(400).json({ message: err });
     }
 });
-router.get("/photos/:name", authorize, Auth.checkAuthApi, async function (req, res) {
-    const name = req.params.name;
+router.get("/photos/:id", authorize, Auth.checkAuthApi, async function (req, res) {
+    const id = req.params.id;
     try {
-        const pic = await Picture.getByShortName(name).populate('author', "login").populate("author", 'login').populate("album", "name");
+        const pic = await Picture.getById(id).populate("author", 'login').populate("album", "name");
 
         if (!pic) {
-            res.status(404).json({ message: `Picture with  name ${name} is not found` });
+            res.status(404).json({ message: `Picture with  id ${id} is not found` });
             return;
         }
         if (pic.author.id == req.user.id || req.user.role === "admin") {
-            //todo
-            //pic.createdAt = prettydate.format(new Date(pic.createdAt));
+
             res.status(200).json(pic);
         }
         else {
@@ -343,18 +338,18 @@ router.get("/photos/:name", authorize, Auth.checkAuthApi, async function (req, r
 
     }
 });
-router.delete("/photos/:name", authorize, Auth.checkAuthApi, async function (req, res) {
-    const name = req.params.name;
+router.delete("/photos/:id", authorize, Auth.checkAuthApi, async function (req, res) {
+    const id = req.params.id;
     try {
-        const pic = await Picture.getByShortName(name).populate('author', "login").populate("author", 'login').populate("album", "name");
+        const pic = await Picture.getById(id).populate('author', "login").populate("album", "name");
 
         if (!pic) {
-            res.status(404).json({ message: "Picture with this name is not found", name });
+            res.status(404).json({ message: `Picture with id ${id} is not found` });
             return;
         }
         if (pic.author.id == req.user.id || req.user.role === "admin") {
 
-            const deleted = await Picture.delete(name);
+            const deleted = await Picture.delete(id);
             res.status(200).json(deleted);
         }
 
@@ -367,20 +362,20 @@ router.delete("/photos/:name", authorize, Auth.checkAuthApi, async function (req
         res.status(500).json({ message: "Internal server error" });
     }
 });
-router.put("/photos/:name", authorize, Auth.checkAuthApi, async function (req, res) {
+router.put("/photos/:id", authorize, Auth.checkAuthApi, async function (req, res) {
 
     if (!req.body.name || !req.body.description) { res.status(400).send({ message: "No specified field" }); return; }
 
-    const oldName = req.params.name;
+    const id = req.params.id;
     try {
-        let picture = await Picture.getByShortName(oldName);
+        let picture = await Picture.getById(id);
         if (!picture) {
             res.status(404).json({ message: "Picture is not found" });
             return;
         }
         let toupd = { short_name: req.body.name, description: req.body.description, author: req.user };
 
-        const result = await Picture.update(picture.id, toupd);
+        const result = await Picture.update(id, toupd);
 
         if (result === 403) {
             res.status(403).json({ message: "Forbidden" });

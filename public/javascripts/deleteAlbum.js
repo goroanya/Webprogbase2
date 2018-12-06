@@ -10,9 +10,9 @@ function deleteConfirm() {
 
     $('#confirmDeleteButton').bind('click', async function () {
 
-        let albumName = $('#album').text();
-        let result = await fetch(`/api/v1/albums/${albumName}`, { method: "DELETE" });
-        result = await result.json();
+        let albumId = $('#albumId').val();
+        
+        await fetch(`/api/v1/albums/${albumId}`, { method: "DELETE" });
         $("deleteForm").submit();
 
     });

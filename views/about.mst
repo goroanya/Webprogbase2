@@ -17,23 +17,41 @@
 
 
   <div class="main-page">
-    <header class="masthead text-center text-white d-flex">
+    <header class="masthead text-center  d-flex">
       <div class="container my-auto">
         <div class="row">
           <div class="col-lg-10 mx-auto">
-            <h1 class="text-uppercase">
-              <strong>Hello!</strong>
-            </h1>
+            <h1 class="text-center text-white  mb-5"><b>Keep the moment</b></h1>
             <hr color="white">
           </div>
-          <div class="col-lg-10 mx-auto">
-            <p class="text-faded mb-5">This site is analog of instagram. Here you can see someone's photos, download
-              your own photo, see user pages,talk to users .<br>
-              Now you can see some photo collection and 3 user pages. <br>
-              The author of "keep the moment" is Ann Horodchenko.<br>
-              Thank you for visiting!
+
+          <div class="col-lg-10 text-light mx-auto">
+            <p class="text-left mb-5">
+              The site is created to keep your best moments of life.<br>
+              You can share your photos and other users can see a little part of your life!
             </p>
+            <h6 class="text-muted text-right mb-5">
+              The author of site is Ann Horodchenko, student of FAM KPI.
+            </h6>
+            <hr color="white">
+
           </div>
+
+          <div class="col-lg-10 mx-auto">
+            <blockquote class="blockquote  text-light text-right">
+              <small class="mb-0">It was really interesting to develop this site. But i will never become a front-end
+                developer...</small>
+              <footer class="blockquote-footer">Me</footer>
+            </blockquote>
+          </div>
+
+          <div class="col-lg-10 mx-auto text-center">
+            <div class="btn-group ">
+              <a href="https://www.instagram.com/goroanya/" class="btn btn-outline-light mx-auto mr-3">Instagram</a>
+              <a href="https://t.me/ama_jesus" class="btn btn-outline-light ml-3">Telegram</a>
+            </div>
+          </div>
+
         </div>
       </div>
     </header>

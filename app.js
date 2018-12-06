@@ -5,7 +5,7 @@ const User = require('./models/user');
 
 const Auth = require("./config/auth");
 const Cloudinary = require("./config/cloudinary");
-
+const FormatDate = require("./config/formatDate");
 
 const express = require('express');
 const mustache = require('mustache-express');
@@ -73,7 +73,7 @@ const PORT = process.env.PORT || 3000;
 // database
 // const databaseUrl =
 //     'mongodb://goroanya:goroanya99@ds145093.mlab.com:45093/keep-the-moment';
-const databaseUrl = 'mongodb://localhost:27017/lab7';
+const databaseUrl = 'mongodb://localhost:27017/kursach';
 
 const connectOptions = { useNewUrlParser: true };
 mongoose
@@ -97,7 +97,7 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
 
     const description = req.body.description;
     const short_name = req.body.short_name;
-    const album_name = req.body.album_name;;
+    const albumId = req.body.albumId;;
 
 
     Cloudinary.fileUpload(pictureFile.data, async (err, url) => {
@@ -107,10 +107,11 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
         } else {
             try {
 
-                const saved = await Picture.insert(new Picture(true, short_name, album_name, description, url, req.user, Date.now()));
-                res.redirect('/photos/page/' + saved.short_name);
+                const saved = await Picture.insert(new Picture(true, short_name, albumId, description, url, req.user, FormatDate(new Date())));
+                res.redirect(`/photos/${saved._id}`);
 
             } catch (error) {
+                console.log(error);
                 req.flash("error", "500 internal server error");
                 res.redirect('/error');
             }
@@ -119,9 +120,9 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
     });
 });
 app.post('/new/album', Auth.checkAuth, async function (req, res) {
-    
+
     const albumCoverFile = req.files.albumCoverFile;
-    const album_name = req.body.album_name;
+    const name = req.body.name;
 
     try {
         if (albumCoverFile) {
@@ -131,16 +132,16 @@ app.post('/new/album', Auth.checkAuth, async function (req, res) {
                     res.redirect("/error");
                 } else {
 
-                    const saved = await Album.insert(new Album(album_name, req.user, [], url));
-                    if (saved) res.redirect(`/albums/${saved.name}`);
+                    const saved = await Album.insert(new Album(name, req.user, [], url));
+                    if (saved) res.redirect(`/albums/${saved._id}`);
                     else res.redirect('/error?message=500+Internal+server+error');
                 }
             });
         }
         else {
 
-            const saved = await Album.insert(new Album(album_name, req.user, [], null));
-            if (saved) res.redirect(`/albums/${saved.name}`);
+            const saved = await Album.insert(new Album(name, req.user, [], null));
+            if (saved) res.redirect(`/albums/${saved._id}`);
             else res.redirect('/error?message=500+Internal+server+error');
 
         }
@@ -150,10 +151,10 @@ app.post('/new/album', Auth.checkAuth, async function (req, res) {
     }
 });
 
-app.post('/update/album/:album_name', Auth.checkAuth, async function (req, res) {
+app.post('/update/albums/:id', Auth.checkAuth, async function (req, res) {
     const albumCoverFile = req.files.albumCoverFile;
-    const oldName = req.params.album_name;
-    const newName = req.body.album_name;
+    const id = req.params.id;
+    const name = req.body.name;
     try {
         if (albumCoverFile) {
 
@@ -163,20 +164,19 @@ app.post('/update/album/:album_name', Auth.checkAuth, async function (req, res) 
                     res.redirect("/error");
 
                 } else {
-                    const updated = await Album.update(oldName, newName, url);
-                    if (updated) res.redirect(`/albums/${updated.name}`);
+                    const updated = await Album.update(id, { name, coverUrl: url });
+                    if (updated) res.redirect(`/albums/${updated._id}`);
                     else res.redirect('/error?message=500+Internal+server+error');
                 }
 
             });
         }
         else {
-            const updated = await Album.update(oldName, newName, null);
-            if (updated) res.redirect(`/albums/${updated.name}`);
+            const updated = await Album.update(id, { name, coverUrl: null });
+            if (updated) res.redirect(`/albums/${updated._id}`);
             else res.redirect('/error?message=500+Internal+server+error');
         }
     } catch (error) {
-        console.log(error);
         req.flash("error", "500 internal server error");
         res.redirect('/error');
     }

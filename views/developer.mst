@@ -49,10 +49,10 @@
                     <tr>
                         <td>/users</td>
                         <td>GET</td>
-                        <td>Admin</td>
+                        <td>Admin, Simple User</td>
                         <td>page - number of page to be displayed (default = 1)<br>offset - number of users to be
                             displayed
-                            on the page (default = 3)</td>
+                            on the page (default = 5)</td>
                         <td>-</td>
                         <td>List of all users</td>
                     </tr>
@@ -67,7 +67,7 @@
                     <tr>
                         <td>/users/:login</td>
                         <td>GET</td>
-                        <td>Admin</td>
+                        <td>Admin, Simple User</td>
                         <td>-</td>
                         <td>-</td>
                         <td>User with specified login<br>If user is not found - returns message about it</td>
@@ -75,7 +75,7 @@
                     <tr>
                         <td>/users/:login</td>
                         <td>DELETE</td>
-                        <td>Admin</td>
+                        <td>Admin, Simple User(owner)</td>
                         <td>-</td>
                         <td>-</td>
                         <td> Deleted user with specified login<br>If user is not found - returns message about it</td>
@@ -83,9 +83,9 @@
                     <tr>
                         <td>/users/:login</td>
                         <td>PUT</td>
-                        <td>Admin</td>
+                        <td>Simple User(owner)</td>
                         <td>-</td>
-                        <td> fullname, role, avaUrl, password </td>
+                        <td> fullname, role, avaUrl, password , bio</td>
                         <td> Updated user with specified login<br>If user is not found - returns message about it</td>
                     </tr>
 
@@ -95,7 +95,7 @@
 
         <hr color="white">
         <table class="table table-dark">
-            <h1 class="text-center">Albums</h1>
+            <h1 class="text-center text-white">Albums</h1>
 
             <thead class="thead-light">
                 <tr style="text-align: center; font-size: 17px">
@@ -114,7 +114,7 @@
                     <td>Admin , Simple User</td>
                     <td>page - number of page to be displayed (default = 1)<br>offset - number of albums to be
                         displayed
-                        on the page (default = 3)</td>
+                        on the page (default = 10)<br>owner - whose albums will be taken</td>
                     <td>-</td>
                     <td>If Admin - returns ALL created albums<br>If Simple User - return all albums of this
                         user
@@ -125,32 +125,32 @@
                     <td>POST</td>
                     <td>Admin, Simple User </td>
                     <td>-</td>
-                    <td>required field : name(should be unique)</td>
+                    <td>required field : name <br> coverUrl - cover picture url for album</td>
                     <td>Created album <br> If not created - returns message about it </td>
                 </tr>
                 <tr>
-                    <td>/albums/:name</td>
+                    <td>/albums/:id</td>
                     <td>GET</td>
-                    <td>Admin, Simple User( author )</td>
+                    <td>Admin, Simple User</td>
                     <td>-</td>
                     <td>-</td>
-                    <td>Album with specified name<br>If album is not found - returns message about it</td>
+                    <td>Album with specified id<br>If album is not found - returns message about it</td>
                 </tr>
                 <tr>
-                    <td>/albums/:name</td>
+                    <td>/albums/:id</td>
                     <td>DELETE</td>
                     <td>Admin, Simple User( author )</td>
                     <td>-</td>
                     <td>-</td>
-                    <td> Deleted album with specified name<br>If album is not found - returns message about it</td>
+                    <td> Deleted album with specified id<br>If album is not found - returns message about it</td>
                 </tr>
                 <tr>
-                    <td>/albums/:name</td>
+                    <td>/albums/:id</td>
                     <td>PUT</td>
                     <td>Simple User( author )</td>
                     <td>-</td>
-                    <td> name(shoud be unique in order to other albums) </td>
-                    <td> Updated album with specified name<br>If album is not found - returns message about it</td>
+                    <td> id - ObjectId of album</td>
+                    <td> Updated album with specified id<br>If album is not found - returns message about it</td>
                 </tr>
 
             </tbody>
@@ -158,7 +158,7 @@
         <hr color="white">
 
         <table class="table table-dark ">
-            <h1 class="text-center">Photos</h1>
+            <h1 class="text-center text-white">Photos</h1>
             <thead class="thead-light">
                 <tr style="text-align: center; font-size: 17px">
                     <th scope="col">URL</th>
@@ -177,10 +177,9 @@
                     <td>Admin , Simple User</td>
                     <td>page - number of page to be displayed (default = 1)<br>offset - number of photos to be
                         displayed
-                        on the page (default = 10)<br> name - for search(offset (default = 5)</td>
+                        on the page (default = 10)<br> filter - for search<br>albumId - photos of album with its id<br>owner- whose photos will be taken</td>
                     <td> - </td>
-                    <td>If Admin - returns ALL created photos<br>If Simple User - return all photos of this
-                        user
+                    <td>returns pagineted active photos in order to query params
                     </td>
                     <td> - </td>
                 </tr>
@@ -189,38 +188,37 @@
                     <td>POST</td>
                     <td>Admin, Simple User </td>
                     <td> - </td>
-                    <td>required field : name(should be unique), url <br> not required fields : description,
-                        album
+                    <td>required field : name, url <br> not required fields : description, album
                     </td>
                     <td>Created photo( author - logged user ) <br> If not created - returns message about it
                     </td>
                     <td> Admin can add photo only to his own albums </td>
                 </tr>
                 <tr>
-                    <td>/photos/:name</td>
+                    <td>/photos/:id</td>
                     <td>GET</td>
-                    <td>Admin, Simple User( author )</td>
+                    <td>Admin, Simple User</td>
                     <td> - </td>
                     <td>-</td>
-                    <td>Photo with specified name<br>If photo is not found - returns message about it</td>
+                    <td>Photo with specified id<br>If photo is not found - returns message about it</td>
                     <td> - </td>
                 </tr>
                 <tr>
-                    <td>/photos/:name</td>
+                    <td>/photos/:id</td>
                     <td>DELETE</td>
                     <td>Admin, Simple User( author )</td>
                     <td>-</td>
                     <td> - </td>
-                    <td> Deleted photo with specified name<br>If photo is not found - returns message about it</td>
+                    <td> Deleted photo with specified id<br>If photo is not found - returns message about it</td>
                     <td> - </td>
                 </tr>
                 <tr>
-                    <td>/photos/:name</td>
+                    <td>/photos/:id</td>
                     <td>PUT</td>
                     <td>Admin, Simple User( author )</td>
                     <td> - </td>
-                    <td> name(shoud be unique in order to other photos), description</td>
-                    <td> Updated photo with specified name<br>If photo is not found - returns message about it</td>
+                    <td> name, description</td>
+                    <td> Updated photo with specified id<br>If photo is not found - returns message about it</td>
                     <td> Admin can update only his own photos </td>
                 </tr>
 

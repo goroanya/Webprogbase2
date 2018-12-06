@@ -17,6 +17,8 @@
   {{>menu}}
 
   <input hidden id="owner" value="{{owner}}">
+  <input hidden id="albumId" value="{{album._id}}">
+
 
   <!-- Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -48,7 +50,7 @@
   <div class="container bg-dark " style="height: 100%">
     <section class="jumbotron text-center bg-light">
       <div class="container">
-        <h1 class="jumbotron-heading" id='album'>{{album}}</h1>
+        <h1 class="jumbotron-heading" id='album'>{{album.name}}</h1>
         {{#canModify}}
         <p>
           {{#adminRole}}
@@ -57,19 +59,18 @@
           {{/adminRole}}
 
           {{^adminRole}}
-          <a href="/albums/{{album}}/new" class="btn btn-outline-secondary my-2">Add photo</a>
-          <a href="/albums/{{album}}/update" class="btn btn-outline-dark my-2">Update album</a>
+          <a href="/albums/{{album._id}}/new" class="btn btn-outline-secondary my-2">Add photo</a>
+          <a href="/albums/{{album._id}}/update" class="btn btn-outline-dark my-2">Update album</a>
           <button id="albumDeleteButton" class="btn btn-outline-danger my-2" data-toggle="modal" data-target="#deleteModal">Delete
             album</button>
           {{/adminRole}}
-          
+
         </p>
         {{/canModify}}
       </div>
       <div class="container">
         <form>
-          <input type="text" onkeyup="searchByName();" class="form-control" id="search" name="search" placeholder="Search.."
-            autofocus>
+          <input type="text" class="form-control" id="search" name="search" placeholder="Search.." autofocus>
         </form>
       </div>
       <div class="container">

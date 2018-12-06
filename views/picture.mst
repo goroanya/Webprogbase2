@@ -15,6 +15,7 @@
 
     {{>menu}}
 
+    <input hidden id="pictureId" value="{{picture.id}}">
     <div class="picture-card mb-5">
         <div class="container ">
             <div class="card text-center">
@@ -25,13 +26,14 @@
                     {{#canModify}}
                     <p>
                         {{#adminRole}}
-                        <button type="button" id="photoDeleteButton" name="deleteAlbum" class="btn btn-outline-danger mybtn"
-                            data-toggle="modal" data-target="#deleteModal">Delete</button>
+                        <button type="button" id="photoDeleteButton" class="btn btn-outline-danger mybtn" data-toggle="modal"
+                            data-target="#deleteModal">Delete</button>
                         {{/adminRole}}
+
                         {{^adminRole}}
-                        <a id="photoUpdateButton" href="/photos/{{picture.short_name}}/update" class="btn btn-outline-dark my-2">Update</a>
-                        <button type="button" id="photoDeleteButton" name="deleteAlbum" class="btn btn-outline-danger mybtn"
-                            data-toggle="modal" data-target="#deleteModal">Delete</button>
+                        <a id="photoUpdateButton" href="/photos/{{picture.id}}/update" class="btn btn-outline-dark my-2">Update</a>
+                        <button type="button" id="photoDeleteButton" class="btn btn-outline-danger mybtn" data-toggle="modal"
+                            data-target="#deleteModal">Delete</button>
                         {{/adminRole}}
                     </p>
                     {{/canModify}}
@@ -41,7 +43,7 @@
                 <div class="card-body">
                     <h5 class="card-title" id="pictureName">{{picture.short_name}}</h5>
                     <p class="card-text">{{picture.description}}</p>
-                    <p class="card-text"><small class="text-muted">{{picture.createdAt}}</small></p>
+                    <p class="card-text"><small class="text-muted">{{picture.time}}</small></p>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">By {{picture.author.login}}</small>
@@ -69,7 +71,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <form action="/albums/{{picture.album.name}}" id="deleteForm" method="get">
+                    <form action="/" id="deleteForm" method="get">
                         <button type="submit" id="confirmDeleteButton" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
@@ -79,7 +81,6 @@
 
     {{>footer}}
     <script src="/javascripts/deletePhoto.js"></script>
-    <script src="/javascripts/picture.js"></script>
 
 </body>
 

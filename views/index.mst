@@ -35,9 +35,14 @@
             <hr color="white">
           </div>
           <div class="col-lg-10 mx-auto">
-            <p class="text-faded mb-5">It's nice to see you on my own website!<br>Here you can see some photos, look
-              for friend's accounts and so so on!<br>The site is always getting better, so don't forget to visit us!<br>
+            <p class="text-faded mb-5">It's nice to see you on my own website!<br>
+              It is created to keep  your best moments, so do!
             </p>
+            {{^user}}
+            <a href="/auth/register" class="btn btn-lg btn-outline-light">GET STARTED</a>
+            <hr>
+            <a href="/auth/login" class="btn btn-sm btn-outline-light">i have an account</a>
+            {{/user}}
           </div>
           {{/message}}
 

@@ -6,10 +6,16 @@ const router = express.Router();
 
 module.exports = router;
 
-router.get('/page/:short_name', Auth.checkAuth, async function (req, res) {
-	const short_name = req.params.short_name;
+router.get("/new", Auth.checkAuth, (req, res) => {
+	res.render('newPicture', {
+		user: req.user
+	});
+});
+
+router.get('/:id', Auth.checkAuth, async function (req, res) {
+	const id = req.params.id;
 	try {
-		const pic = await Picture.getByShortName(short_name).populate('author', 'login').populate('album', 'name');
+		const pic = await Picture.getById(id).populate('author', 'login').populate('album', 'name');
 
 		if (!pic) {
 			req.flash("error", "404 picture is not found");
@@ -31,9 +37,9 @@ router.get('/page/:short_name', Auth.checkAuth, async function (req, res) {
 });
 
 
-router.get('/:short_name/update', Auth.checkAuth, async function (req, res) {
+router.get('/:id/update', Auth.checkAuth, async function (req, res) {
 	try {
-		const pic = await Picture.getByShortName(req.params.short_name).populate('album');
+		const pic = await Picture.getById(req.params.id).populate('album');
 
 		if (pic.author != req.user.id) {
 
@@ -47,13 +53,9 @@ router.get('/:short_name/update', Auth.checkAuth, async function (req, res) {
 			});
 		}
 	} catch (err) {
+
 		req.flash("error", "500\n Internal Server Error");
 		res.redirect("/error");
 	}
 });
 
-router.get("/new", Auth.checkAuth, (req, res) => {
-	res.render('newPicture', {
-		user: req.user
-	});
-});

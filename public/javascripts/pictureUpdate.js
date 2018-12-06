@@ -30,7 +30,7 @@ function updateConfirm() {
 
         $('#confirmUpdateButton').bind('click', async function () {
 
-            let result = await fetch(`/api/v1/photos/${$('#old_short_name').val()}`, {
+            let result = await fetch(`/api/v1/photos/${$('#picId').val()}`, {
                 method: "PUT",
                 body: JSON.stringify({ name: $('#short_name').val(), description: $('#description').val() }),
                 headers: {
@@ -38,13 +38,13 @@ function updateConfirm() {
                 },
             });
             result = await result.json();
-            console.log(result)
+            console.log(result.message);
             if (result.message) {
                 $('#error-message').html(result.message);
             }
             else {
             
-                $("#updateForm").attr('action', `/photos/page/${result.short_name}`);
+                $("#updateForm").attr('action', `/photos/${result._id}`);
 
                 $("#updateForm").submit();
             }

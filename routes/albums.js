@@ -29,12 +29,12 @@ router.get('/new', Auth.checkAuth, function (req, res) {
 	});
 });
 
-router.get('/:album_name', Auth.checkAuth, async function (req, res) {
+router.get('/:id', Auth.checkAuth, async function (req, res) {
 
-	const album_name = req.params.album_name;
+	const id = req.params.id;
 
 	try {
-		const album = await Album.getByName(album_name).populate("author", "login");
+		const album = await Album.getById(id).populate("author", "login");
 		if (!album) {
 			req.flash("error", "404\n Album is Not Found");
 			res.redirect("/error");
@@ -42,7 +42,7 @@ router.get('/:album_name', Auth.checkAuth, async function (req, res) {
 		}
 
 		res.render('album', {
-			album: album.name,
+			album,
 			owner: album.author.login,
 			user: req.user,
 			canModify: album.author.login == req.user.login || req.user.role === "admin",
@@ -59,10 +59,10 @@ router.get('/:album_name', Auth.checkAuth, async function (req, res) {
 });
 
 
-router.get('/:album_name/new', Auth.checkAuth, async function (req, res) {
+router.get('/:id/new', Auth.checkAuth, async function (req, res) {
 	try {
 
-		let album = await Album.getByName(req.params.album_name);
+		let album = await Album.getById(req.params.id);
 		if (!album) {
 
 			res.status(404);
@@ -73,7 +73,7 @@ router.get('/:album_name/new', Auth.checkAuth, async function (req, res) {
 
 			if (album.author == req.user.id)
 				res.render('newPicture', {
-					album_name: album.name,
+					album,
 					user: req.user
 				});
 
@@ -91,11 +91,11 @@ router.get('/:album_name/new', Auth.checkAuth, async function (req, res) {
 	}
 });
 
-router.get('/:album_name/update', Auth.checkAuth, async function (req, res) {
+router.get('/:id/update', Auth.checkAuth, async function (req, res) {
 
-	const album_name = req.params.album_name;
+	const id = req.params.id;
 
-	const album = await Album.getByName(album_name);
+	const album = await Album.getById(id);
 	if (!album) {
 		req.flash("error", "404\n Album  is Not Found");
 		res.redirect("/error");
@@ -107,7 +107,6 @@ router.get('/:album_name/update', Auth.checkAuth, async function (req, res) {
 	else res.render('updateAlbum', {
 		album,
 		user: req.user,
-		message: req.flash("updateAlbumError")
 	});
 });
 

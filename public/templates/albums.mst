@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <p class="card-text">{{name}} </p>
                         <div class="d-flex justify-content-between align-items-center ">
-                            <a class =" btn btn-sm btn-outline-secondary " href="/albums/{{name}}">View</a>
+                            <a class =" btn btn-sm btn-outline-secondary " href="/albums/{{_id}}">View</a>
                         </div>
                     </div>
                 </div>

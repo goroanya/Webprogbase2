@@ -27,8 +27,8 @@
           
           <div class="form-group row justify-content-center">
             <div class="col-md-4">
-              <input id="album_name" name="album_name" type="text" placeholder="Short uniqe name for your album" class="form-control input-md"
-                required="" title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 10 characters">
+              <input id="album_name" name="name" type="text" placeholder="Short  name for your album" class="form-control input-md"
+                required="true" title="name could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 10 characters">
             </div>
           </div>
 
