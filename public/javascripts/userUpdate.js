@@ -2,7 +2,7 @@ $('#userUpdateButton').click(function () {
     updateConfirm();
 });
 
-const fullnameRegExpr = /[A-Za-z][A-Za-z\s]+/;
+const fullnameRegExpr = /[A-Za-z\s]+$/;
 
 
 $('#inputFullname').on('input', function () {
@@ -10,7 +10,8 @@ $('#inputFullname').on('input', function () {
 
     let test = fullnameRegExpr.test(value);
 
-    if (!test) {
+    if (value.length === 0) $('#error').html("");
+    else if (!test) {
         $('#error').html("Invalid fullname");
     } else {
         $('#error').html("");
@@ -26,7 +27,7 @@ function updateConfirm() {
 
     let test = fullnameRegExpr.test(value);
 
-    if (test) {
+    if (value.length === 0 || test) {
         $('#modal-error').html("");
 
         $('#confirmUpdateButton').bind('click', () => {

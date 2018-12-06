@@ -3,7 +3,7 @@ const usersPerPage = 4;
 async function renderUsers() {
     try {
 
-        let itemsData = await fetch(`/api/v1/users?page=${localStorage.page}&offset=${usersPerPage}`);
+        let itemsData = await fetch(`/api/v1/users?page=${localStorage.page}&offset=${usersPerPage}`, { credentials: "same-origin" });
         itemsData = await itemsData.json();
 
         let templateStr = await fetch("/templates/users.mst");

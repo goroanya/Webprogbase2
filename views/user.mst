@@ -5,7 +5,7 @@
 
   {{>head}}
 
-  <title>{{userProfile.fullname}}</title>
+  <title>{{userProfile.login}}</title>
   <meta name="description" content="page of {{userProfile.fullname}}">
   <link type="text/css" href="/stylesheets/user.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
@@ -23,7 +23,7 @@
 
 
 
-  <div class="mycontainer">
+  <div class="mycontainer mb-5">
     <div class="card   text-light bg-dark ">
 
       <div class="card-header">
@@ -35,7 +35,7 @@
       {{/canModify}}
 
       <div class="card-img-top mt-5 mx-auto ">
-        <img class="rounded" src="{{userProfile.avaUrl}}">
+        <img class="rounded " src="{{userProfile.avaUrl}}" width="300" height="280">
       </div>
 
       <div class="card-body">
@@ -56,7 +56,7 @@
 
         </h1>
         {{#userProfile.fullname}}<h3 class="my-1">Fullname : {{userProfile.fullname}}</h3>{{/userProfile.fullname}}
-        {{#userProfile.bio}}<p class="mx-auto ">Bio <br>{{userProfile.bio}}</p>{{/userProfile.bio}}
+        {{#userProfile.bio}}<p class="mx-auto "><br>{{userProfile.bio}}</p>{{/userProfile.bio}}
 
       </div>
       <div class="card-footer">

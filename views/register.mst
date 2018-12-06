@@ -19,12 +19,17 @@
 
         <label for="inputLogin" class="sr-only">Login</label>
         <input id="inputLogin" name="username" type="text" value="{{login}}" placeholder="Login" autofocus title=" login could contain only letters (either case), numbers, point and the underscore, no spaces; at least 1 characters but no more than 15 characters"
-            class="form-control" required  autocomplete="nope" />
+            class="form-control" required autocomplete="nope" />
+        <span class="help-block">login could contain only letters (either case), numbers, point and the underscore, no
+            spaces; at least 1 characters but no more than 15 characters</span>
+
         <p id="errorLogin" class="mt-3 mb-3 error-message"></p>
 
         <label for="inputPassword" class="sr-only">Password</label>
-        <input id="inputPassword" name="password" type="password" placeholder="Password" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-            class="form-control" required  />
+        <input id="inputPassword" name="password" type="password" placeholder="Password" title="password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            class="form-control" required />
+        <span class="help-block">password must contain at least one number and one uppercase and lowercase letter, and
+            at least 8 or more characters</span>
         <p id="errorPassword" class="mt-3 mb-3 error-message"></p>
 
 
@@ -39,7 +44,7 @@
 
 
         <label>
-            <input type="checkbox"  required> I accept the terms of use</label>
+            <input type="checkbox" required> I accept the terms of use</label>
         <button class="btn btn-lg btn-dark btn-block" type="submit" name="submit" id="submit">Sign Up</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
 

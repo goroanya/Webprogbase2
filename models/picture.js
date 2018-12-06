@@ -18,7 +18,7 @@ class Picture {
         this.description = description;
         this.url = url;
         this.author = author.id;
-        this.time = time;
+        this.time= time;
     }
 
 

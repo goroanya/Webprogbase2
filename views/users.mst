@@ -5,7 +5,6 @@
   {{>head}}
   <title>Users</title>
   <meta name="description" content="Users">
-  <link type="text/css" href="/stylesheets/users.css" rel="stylesheet" />
 
 
 </head>

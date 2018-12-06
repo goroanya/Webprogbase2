@@ -20,7 +20,8 @@ router.get('/:login', Auth.checkAuth, async function (req, res) {
 
     const user = await User.getByLogin(login).populate('tempPhotos');
     if (!user) {
-      req.flash("error", "404\n User Not Found");
+      req.flash("error", "404 User is not found");
+      res.redirect('/error');
       return;
     }
     res.render('user', {

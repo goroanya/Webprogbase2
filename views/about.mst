@@ -16,7 +16,7 @@
   {{>menu}}
 
 
-  <div class="main-page">
+  <div class="main-page mb-5">
     <header class="masthead text-center  d-flex">
       <div class="container my-auto">
         <div class="row">
@@ -47,8 +47,8 @@
 
           <div class="col-lg-10 mx-auto text-center">
             <div class="btn-group ">
-              <a href="https://www.instagram.com/goroanya/" class="btn btn-outline-light mx-auto mr-3">Instagram</a>
-              <a href="https://t.me/ama_jesus" class="btn btn-outline-light ml-3">Telegram</a>
+              <a href="https://www.instagram.com/goroanya/" target="_blank" class="btn btn-outline-light mx-auto mr-3">Instagram</a>
+              <a href="https://t.me/ama_jesus"  target="_blank" class="btn btn-outline-light ml-3">Telegram</a>
             </div>
           </div>
 

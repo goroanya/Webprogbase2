@@ -18,7 +18,7 @@
 
     <input hidden id="login" name="login" value="{{userProfile.login}}">
 
-    <div class="user-profile-form text-white mb-3">
+    <div class="user-profile-form text-white mb-5">
         <div class="container">
 
             <form id="updateForm" action="/update/users/{{userProfile.login}}" method="POST" enctype="multipart/form-data">
@@ -45,7 +45,7 @@
                     <div class="form-group row justify-content-center  ">
                         <div class="col-md-8">
                             <label for="currentAva">Your current avatar</label>
-                            <img id="currentAva" src="{{userProfile.avaUrl}}">
+                            <img  class="rounded" id="currentAva" src="{{userProfile.avaUrl}}" width="300" height="280" >
                             <hr color='white' />
                         </div>
                     </div>

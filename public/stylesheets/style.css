@@ -72,7 +72,7 @@ html {
 
 .error-message {
     text-align: left;
-    color: red;
+    color: rgb(209, 123, 123);
 }
 
 .empty {

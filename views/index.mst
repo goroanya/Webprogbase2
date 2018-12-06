@@ -13,8 +13,7 @@
   {{>menu}}
 
   <div class="main-page">
-    <header class="masthead text-center text-white d-flex">
-      <div class="container my-auto">
+      <div class="container text-center text-white  my-auto">
         <div class="row">
 
           {{#message}}
@@ -48,7 +47,6 @@
 
         </div>
       </div>
-    </header>
   </div>
   {{>footer}}
 

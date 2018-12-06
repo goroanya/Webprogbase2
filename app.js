@@ -70,9 +70,6 @@ app.set('view engine', 'mst');
 
 const PORT = process.env.PORT || 3000;
 
-// database
-// const databaseUrl =
-//     'mongodb://goroanya:goroanya99@ds145093.mlab.com:45093/keep-the-moment';
 const databaseUrl = process.env.DB_URL;
 
 const connectOptions = { useNewUrlParser: true };
