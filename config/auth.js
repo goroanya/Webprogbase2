@@ -1,7 +1,7 @@
 module.exports = {
     checkAuth: function (req, res, next) {
         if (!req.user) {
-            res.redirect('/error?message=Not+authorized');
+            res.redirect('/error?message=401++Not+authorized');
         }
         else next();
     },

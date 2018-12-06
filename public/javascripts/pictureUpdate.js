@@ -38,7 +38,6 @@ function updateConfirm() {
                 },
             });
             result = await result.json();
-            console.log(result.message);
             if (result.message) {
                 $('#error-message').html(result.message);
             }

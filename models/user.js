@@ -35,20 +35,16 @@ class User {
         if (user.avaUrl) toUpdate.avaUrl = user.avaUrl;
         if (user.password) toUpdate.password = user.password;
 
-
         await toUpdate.save();
         return toUpdate;
 
     }
-
-    //
     static getById(id) {
         return models.User.findById(id);
     }
     static deleteById(id) {
         return models.User.findByIdAndDelete(id);
     }
-    //
     static async updateRole(login, role) {
         let user = await models.User.findOne({ login });
         user.role = role;

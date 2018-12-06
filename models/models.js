@@ -33,14 +33,6 @@ const PictureSchema = new mongoose.Schema({
 
     }
 
-    // viewers: [
-    //     {
-    //
-    //             type: mongoose.Schema.Types.ObjectId,
-    //             ref: "User"
-    //
-    //     }. 
-    // ],
 }, { timestamps: true });
 PictureSchema.plugin(mongoosePaginate);
 

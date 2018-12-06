@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 const busboyBodyParser = require('busboy-body-parser');
 const passport = require('passport');
 
-// const prettydate = require("pretty-date");
-
 const Auth = require("../config/auth");
 const Hash = require("../config/hash");
 const User = require('../models/user');

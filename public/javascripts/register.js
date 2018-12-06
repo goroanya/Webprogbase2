@@ -1,6 +1,5 @@
 let loginRegExpr = /[A-Za-z0-9_.]{4,15}/;
-//let passwordRegExpr = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-let passwordRegExpr = /[\d]+$/;
+let passwordRegExpr = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
 
 $('#inputLogin').on('input', async () => {
@@ -33,8 +32,7 @@ $('#inputPassword').on('input', () => {
     let test = passwordRegExpr.test(password);
 
     if (password.length === 0) $('#errorPassword').html("Empty field!");
-    //todo
-    //  else if (password.length < 3 || password.length > 15) $('#errorPassword').html("Password should contain at least 8 characters");
+     else if (password.length < 3 || password.length > 15) $('#errorPassword').html("Password should contain at least 8 characters");
     else if (!test) {
         $('#errorPassword').html("Invalid password");
     } else {

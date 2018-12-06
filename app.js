@@ -73,7 +73,7 @@ const PORT = process.env.PORT || 3000;
 // database
 // const databaseUrl =
 //     'mongodb://goroanya:goroanya99@ds145093.mlab.com:45093/keep-the-moment';
-const databaseUrl = 'mongodb://localhost:27017/kursach';
+const databaseUrl = process.env.DB_URL;
 
 const connectOptions = { useNewUrlParser: true };
 mongoose
@@ -111,7 +111,6 @@ app.post('/new/picture', Auth.checkAuth, function (req, res) {
                 res.redirect(`/photos/${saved._id}`);
 
             } catch (error) {
-                console.log(error);
                 req.flash("error", "500 internal server error");
                 res.redirect('/error');
             }
@@ -218,7 +217,6 @@ app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
 
         }
     } catch (error) {
-        console.log(error);
         req.flash("error", "500 internal server error");
         res.redirect('/error');
     }
