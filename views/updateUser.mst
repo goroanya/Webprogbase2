@@ -33,11 +33,23 @@
                         </div>
                     </div>
 
+                    <div class="form-group row justify-content-center ">
+                        <div class="col-md-4">
+
+                            <label for="tgUsername">
+                                If you want to get notifications about reactions to your stories, please at first enter any
+                                message to our bot  <code><a href="https://t.me/keep_the_moment_bot">@keep_the_moment_bot</a></code><br>
+                                Telegram username:
+                            </label>
+                            <input name="tgUsername" id="tgUsername" class="form-control" value="{{userProfile.tgUsername}}"
+                                type="text">
+                        </div>
+                    </div>
 
                     <div class="form-group row justify-content-center">
                         <div class="col-md-8">
                             <label for="biography">Bio</label>
-                            <textarea class="form-control" id="biography" name="userBio" placeholder="Describe yourself here..." > {{userProfile.bio}} </textarea>
+                            <textarea class="form-control" id="biography" name="userBio" placeholder="Describe yourself here..."> {{userProfile.bio}} </textarea>
                         </div>
                     </div>
 
@@ -45,7 +57,7 @@
                     <div class="form-group row justify-content-center  ">
                         <div class="col-md-8">
                             <label for="currentAva">Your current avatar</label>
-                            <img  class="rounded" id="currentAva" src="{{userProfile.avaUrl}}" width="300" height="280" >
+                            <img class="rounded" id="currentAva" src="{{userProfile.avaUrl}}" width="300" height="280">
                             <hr color='white' />
                         </div>
                     </div>

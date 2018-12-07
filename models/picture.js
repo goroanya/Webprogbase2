@@ -93,7 +93,7 @@ class Picture {
             savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);
         }
-        let time = 86400000;// 24 hours 
+        let time = 10000;// 24 hours 
         setTimeout(async () => {
             try {
 
@@ -122,9 +122,9 @@ class Picture {
         if (!pictureToUpdate) return 404;
         else if (pictureToUpdate.author != pic.author.id) return 403;
         else {
-            if (pic.short_name) pictureToUpdate.short_name = pic.short_name;
-            if (pic.description) pictureToUpdate.description = pic.description;
-            if (pic.active) pictureToUpdate.active = pic.active;
+            if (pic.short_name != null) pictureToUpdate.short_name = pic.short_name;
+            if (pic.description != null) pictureToUpdate.description = pic.description;
+            if (pic.active != null) pictureToUpdate.active = pic.active;
             return models.Picture.findByIdAndUpdate(id, pictureToUpdate, { new: true });
         }
     }

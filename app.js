@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const Picture = require('./models/picture');
 const Album = require('./models/album');
 const User = require('./models/user');
@@ -18,14 +20,12 @@ const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
 
-
+require("./modules/telegram");
 require("./modules/passport");
 
 const app = express();
 
-
 app.use(express.static(path.join(__dirname, './public')));
-
 
 app.use(
     bodyParser.urlencoded({
@@ -38,7 +38,7 @@ app.use(busboyBodyParser({ limit: '5mb' }));
 app.use(cookieParser());
 app.use(
     session({
-        secret: 'SEGReT$25_',
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
     })
@@ -207,7 +207,8 @@ app.post('/update/users/:login', Auth.checkAuth, async function (req, res) {
 
             const updated = await User.update(req.params.login, {
                 fullname: req.body.fullname,
-                bio: req.body.userBio
+                bio: req.body.userBio,
+                tgUsername: req.body.tgUsername
             });
             if (updated) res.redirect('/users/' + updated.login);
             else res.redirect('/error?message=500+Internal+server+error');

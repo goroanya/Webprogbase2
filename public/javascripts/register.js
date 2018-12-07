@@ -71,7 +71,6 @@ $('#signup').submit(function (e) {
 
     if (errorLogin === "" && errorPassword === "" && errorConfirmPassword === "") $('#signup').submit();
     else {
-
         e.preventDefault();
     }
 });  

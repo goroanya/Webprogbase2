@@ -56,65 +56,21 @@
 
         </h1>
         {{#userProfile.fullname}}<h3 class="my-1">Fullname : {{userProfile.fullname}}</h3>{{/userProfile.fullname}}
+        {{#userProfile.tgUsername}}<h3><br> Telegram username : <a  href="https://t.me/{{userProfile.tgUsername}}">@{{userProfile.tgUsername}}</a>{{/userProfile.tgUsername}}
         {{#userProfile.bio}}<p class="mx-auto "><br>{{userProfile.bio}}</p>{{/userProfile.bio}}
+
 
       </div>
       <div class="card-footer">
         <hr color="white">
         <p>
           <a href="/users/{{userProfile.login}}/albums" class="btn btn-outline-light btn-lg mr-2">Albums</a>
-          <a href="/users/{{userProfile.login}}/stories" class="btn btn-outline-light btn-lg ml-2">Stories(search)</a>
+          <a href="/users/{{userProfile.login}}/stories" class="btn btn-outline-light btn-lg ml-2">Stories</a>
         </p>
         <hr color="white">
-
-        {{#userProfile.tempPhotos.length}}
-        <h1>Stories</h1>
-        {{/userProfile.tempPhotos.length}}
-
-        <div class="container">
-          <div class="row">
-            <div class="row">
-              {{#userProfile.tempPhotos}}
-              <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a class="thumbnail" href="{{url}}" data-image-id="" data-toggle="modal" data-title="{{short_name}}"
-                  data-date="{{time}}" data-value="{{description}}" data-image="{{url}}" data-target="#image-gallery">
-                  <img class="img-thumbnail" src="{{url}}" alt="{{short_name}}">
-                </a>
-              </div>
-              {{/userProfile.tempPhotos}}
-            </div>
-
-
-            <div class="modal   fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content text-light bg-dark">
-                  <div class="modal-header">
-                    <h4 class="modal-title text-center" id="image-gallery-title"></h4>
-                    <button type="button" class="close text-light" data-dismiss="modal"><span aria-hidden="true">×</span><span
-                        class="sr-only">Close</span>
-                    </button>
-
-                  </div>
-                  <div class="modal-body">
-                    <p id="image-gallery-date" class="text-right"></p>
-                    <img id="image-gallery-image" class="img-responsive col-md-12" src="">
-                    <p id="image-gallery-body"></p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-light float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
-                    </button>
-
-                    <button type="button" id="show-next-image" class="btn btn-outline-light float-right"><i class="fa fa-arrow-right"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
+  </div>
   </div>
 
 

@@ -1,7 +1,8 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 
+const LocalStrategy = require('passport-local').Strategy;
 const BasicStrategy = require('passport-http').BasicStrategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 const User = require('../models/user');
@@ -94,20 +95,29 @@ passport.use("basic", new BasicStrategy(
         }
     }
 ));
-//-------------------------------------------JWT----------------------------------------------
+//-------------------------------------------GOOGLE OATH2----------------------------------------------
 
 
+passport.use(new GoogleStrategy({
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: process.env.URL_CALLBACK
+},
+    async function (accessToken, refreshToken, profile, cb) {
+        try {
+            let user = await User.findOrCreate({
+                googleId: profile.id,
 
-// passport.use(new JWTStrategy({
-//     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-//     secretOrKey: 'wi23*N1,@?"21l' },
-//     async function (jwtPayload, cb) {
-//         try {
-//             const user = await User.getByLogin(jwtPayload.id);
-//             if (!user) cb(null, false);
-//             else cb(null, user);
-//         } catch (err) {
-//             cb(err);
-//         }
-//     }
-// ));
+                login: profile.emails[0].value.substring(0, profile.emails[0].value.lastIndexOf("@")),
+
+                avaUrl: profile.photos[0].value,
+
+                fullname: profile.displayName,
+                role: "simple"
+            });
+            return cb(null, user);
+        } catch (err) {
+            return cb(err);
+        }
+    }
+));

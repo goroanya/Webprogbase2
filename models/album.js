@@ -29,8 +29,8 @@ class Album {
     static async update(id, toUpd) {
 
         let album = await models.Album.findById(id);
-        if (toUpd.name) album.name = toUpd.name;
-        if (toUpd.coverUrl) album.coverUrl = toUpd.coverUrl;
+        if (toUpd.name != null) album.name = toUpd.name;
+        if (toUpd.coverUrl != null) album.coverUrl = toUpd.coverUrl;
         await album.save();
         return album;
 

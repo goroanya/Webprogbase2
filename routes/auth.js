@@ -50,6 +50,21 @@ router.get('/logout',  (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+
+router.get('/google',
+  passport.authenticate('google', { scope: ['email'] }));
+
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/auth/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
+
+
 module.exports = router;
 
 

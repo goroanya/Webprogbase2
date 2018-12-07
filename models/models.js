@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
+const ChatIDSchema = new mongoose.Schema({
+    username: { type: String, unique: true },
+    tg_id: { type: Number }
+});
+
+const ChatIDModel = mongoose.model("ChatID", ChatIDSchema);
 
 const PictureSchema = new mongoose.Schema({
     short_name: {
@@ -71,8 +77,10 @@ const albumModel = mongoose.model('Album', AlbumSchema);
 const UserSchema = new mongoose.Schema({
     login: { type: String, required: true, unique: true },
     password: {
-        type: String,
-        required: true,
+        type: String
+    },
+    googleId: {
+        type: String
     },
     role: { type: String, required: true },
     fullname: { type: String },
@@ -96,6 +104,7 @@ const UserSchema = new mongoose.Schema({
             ref: 'Album',
         },
     ],
+    tgUsername: { type: String }
 }, { timestamps: true });
 UserSchema.plugin(mongoosePaginate);
 
@@ -105,4 +114,5 @@ module.exports = {
     Picture: pictureModel,
     Album: albumModel,
     User: userModel,
+    ChatID: ChatIDModel
 };

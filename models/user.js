@@ -10,7 +10,12 @@ class User {
         this.role = role;
     }
 
-    static async getAll(page, usersPerPage) {
+    static async findOrCreate(user) {
+        let dbUser = await models.User.findOne({ googleId: user.googleId });
+        if (dbUser) return dbUser;
+        else return await models.User(user).save();
+    }
+    static getAll(page, usersPerPage) {
         return models.User.paginate({}, { page, limit: usersPerPage });
     }
     static getAllLength() {
@@ -29,12 +34,12 @@ class User {
         let toUpdate = await this.getByLogin(login);
         if (!toUpdate) return null;
 
-        if (user.fullname) toUpdate.fullname = user.fullname;
-        if (user.role) toUpdate.role = user.role;
-        if (user.bio) toUpdate.bio = user.bio;
-        if (user.avaUrl) toUpdate.avaUrl = user.avaUrl;
-        if (user.password) toUpdate.password = user.password;
-
+        if (user.fullname != null) toUpdate.fullname = user.fullname;
+        if (user.role != null) toUpdate.role = user.role;
+        if (user.bio != null) toUpdate.bio = user.bio;
+        if (user.avaUrl != null) toUpdate.avaUrl = user.avaUrl;
+        if (user.password != null) toUpdate.password = user.password;
+        if (user.tgUsername != null) toUpdate.tgUsername = user.tgUsername;
         await toUpdate.save();
         return toUpdate;
 

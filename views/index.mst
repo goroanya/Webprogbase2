@@ -40,7 +40,6 @@
             {{^user}}
             <a href="/auth/register" class="btn btn-lg btn-outline-light">GET STARTED</a>
             <hr>
-            <a href="/auth/login" class="btn btn-sm btn-outline-light">i have an account</a>
             {{/user}}
           </div>
           {{/message}}
