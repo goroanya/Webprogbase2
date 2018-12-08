@@ -397,16 +397,18 @@ router.post("/sendReaction/:login", async function (req, res) {
     try {
         const reciever = await User.getByLogin(req.params.login);
         if (reciever.tgUsername) {
-            await telegram.sendMessage(`Reaction to  \'${req.body.picName}\' from ${req.user.login}:\n\n${req.body.reaction}`, reciever.tgUsername);
-            res.status(200).json({ reaction: req.body.reaction });
-            return;
+            const chatId = await telegram.sendMessage(`Reaction to  \'${req.body.picName}\' from ${req.user.login}:\n\n${req.body.reaction}`, reciever.tgUsername);
+            
+            if(!chatId) res.json({ message: `${req.params.login} did not connect telegram bot. He/she will not receive the message...` });
+            else res.json({ reaction: req.body.reaction });
         }
         else {
             res.status(200).json({ message: `${req.params.login} did not give his username in telegram. He/she will not receive the message...` });
         }
 
     } catch (err) {
-        res.status(500).json({ message: '500 Internal Server Error' });
+        res.status(500).json({ message: ' ' });
+        //console.log(err);
     }
 });
 

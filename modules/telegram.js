@@ -13,10 +13,14 @@ bot.on("message", async message => {
 module.exports = {
     sendMessage: async (text, username) => {
         const chatId = await ChatID.getByUsername(username);
-        await bot.sendMessage({
-            text,
-            chat_id: chatId.tg_id,
-            parse_mode: "markdown"
-        });
+        if (!chatId) return null;
+        else {
+            await bot.sendMessage({
+                text,
+                chat_id: chatId.tg_id,
+                parse_mode: "markdown"
+            });
+            return chatId;
+        }
     }
 };

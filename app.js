@@ -227,8 +227,6 @@ app.get('/error', function (req, res) {
     if (req.query.message && message.includes('+')) {
         message = message.replace(/+/g, " ");
     }
-
-
     res.render('index', {
         message: message || req.flash("error"),
         user: req.user,

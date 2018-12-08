@@ -1,5 +1,5 @@
 let loginRegExpr = /[A-Za-z0-9_.]{4,15}/;
-let passwordRegExpr = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+let passwordRegExpr = /[A-Za-z0-9_.]{8,}/;
 
 
 $('#inputLogin').on('input', async () => {

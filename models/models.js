@@ -84,7 +84,6 @@ const UserSchema = new mongoose.Schema({
     },
     role: { type: String, required: true },
     fullname: { type: String },
-    registeredAt: { type: Date },
     avaUrl: {
         type: String,
         default: 'https://ictv.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png',
@@ -104,7 +103,7 @@ const UserSchema = new mongoose.Schema({
             ref: 'Album',
         },
     ],
-    tgUsername: { type: String }
+    tgUsername: { type: String, unique: true }
 }, { timestamps: true });
 UserSchema.plugin(mongoosePaginate);
 

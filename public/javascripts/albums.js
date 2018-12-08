@@ -14,7 +14,7 @@ async function renderAlbums() {
         albumsEl.innerHTML = htmlStr;
     }
     catch (err) {
-        console.error(err);
+        //console.error(err);
     }
 }
 

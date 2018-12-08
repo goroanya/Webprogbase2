@@ -74,11 +74,12 @@ class Picture {
 
     static async  insert(pic) {
         let savedPic;
-        if (pic.albumId) {
+        if (pic.album) {
             
             // якщо нам передали id альбому, то картинка вже НЕ ТІЛЬКИ ТИМЧАСОВА і буде зберігатись в альбомі
-            let album = await Album.getById(pic.albumId);
+            let album = await Album.getById(pic.album);
 
+            console.log(album);
             //якщо адмін хоче додати фото не в свій альбом
             if (album && album.author != pic.author) return 403;
 
@@ -93,7 +94,7 @@ class Picture {
             savedPic = await models.Picture(pic).save();
             await User.addTempPhoto(pic.author, savedPic.id);
         }
-        let time = 10000;// 24 hours 
+        let time = 1000;// 10 sec
         setTimeout(async () => {
             try {
 
@@ -108,7 +109,7 @@ class Picture {
                 //якщо картинку не зберегли в альбом-видаляємо її з бази даних
                 if (!copy.album) await models.Picture.findByIdAndDelete(copy.id);
             } catch (err) {
-                console.log(err);
+                //console.log(err);
             }
         }, time);
 

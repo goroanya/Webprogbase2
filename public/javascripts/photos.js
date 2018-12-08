@@ -41,7 +41,7 @@ async function renderPhotos() {
     }
 
     catch (err) {
-        console.error(err);
+        //console.error(err);
     }
 }
 

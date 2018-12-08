@@ -2,7 +2,7 @@ $('#userUpdateButton').click(function () {
     updateConfirm();
 });
 
-const fullnameRegExpr = /[A-Za-z\s]+$/;
+const fullnameRegExpr = /[A-Za-zа-яёА-ЯЁ\s]+$/;
 
 
 $('#inputFullname').on('input', function () {

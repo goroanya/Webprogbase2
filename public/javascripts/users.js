@@ -16,7 +16,7 @@ async function renderUsers() {
 
     }
     catch (err) {
-        console.error(err);
+        //console.error(err);
     }
 }
 

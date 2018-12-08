@@ -47,15 +47,15 @@
 
                     <div class="form-group row justify-content-center ">
                         <div class="col-md-6">
-                                <input id ="reaction" type="text" name="reaction" class="form-control mt-2 mb-1">
-                                <button type="button" class="btn btn-light mt-2" id='sendBtn' >Send</button>
-                            <p id ="message"></p>
+                            <input id="reaction" type="text" name="reaction" class="form-control mt-2 mb-1" maxlength="300">
+                            <button type="button" class="btn btn-light mt-2" id='sendBtn'>Send</button>
+                            <p id="message"></p>
                         </div>
                     </div>
 
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">By {{picture.author.login}}</small>
+                    <small class="text-muted">By <a href="/users/{{picture.author.login}}"> {{picture.author.login}}</a></small>
                     <input hidden type="text" value="{{picture.author.login}}" id="author">
                 </div>
             </div>
